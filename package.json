@@ -1,0 +1,79 @@
+{
+  "name": "gestion",
+  "version": "0.1.31",
+  "main": "main.js",
+  "homepage": "./",
+  "private": true,
+  "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^13.5.0",
+    "framer-motion": "^12.9.1",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "electron": "electron .",
+    "dev": "concurrently \"npm run start\" \"npm run electron\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "e-pack": "electron-builder",
+    "compile": "npm run build && electron-builder"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "build": {
+  "appId": "com.gestionPDASuge.nom",
+  "productName": "GestionPDA-SUGE",
+  "files": [
+    "build/**/*",
+    "main.js"
+  ],
+  "directories": {
+    "output": "release"
+  },
+  "extraMetadata": {
+    "main": "main.js"
+  },
+  "win": {
+    "target": "nsis"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Gestion PDA SUGE"
+  }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "electron": "^35.2.2",
+    "electron-builder": "^26.0.12",
+    "wait-on": "^8.0.3"
+  }
+}

@@ -1,0 +1,36 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Node modules
+node_modules/
+
+# Build output
+/dist
+/build
+/out
+/.parcel-cache
+
+# Electron packaging
+/release
+/*.asar
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Electron specific
+electron-builder.yml
+electron-builder.json

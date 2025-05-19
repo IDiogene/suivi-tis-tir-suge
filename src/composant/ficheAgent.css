@@ -1,0 +1,244 @@
+.fiche {
+    z-index: 100;
+    position: fixed;
+    top: 10px;
+    background: rgb(36, 36, 36);
+    height: 95vh;
+    width: 95vw;
+    border: solid black 5px;
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 13vw 13vw 13vw 13vw 13vw 13vw 13vw;
+    grid-template-rows: 10vh 10vh 32vh 32vh 10vh;
+    grid-template-areas: 
+    "a0 a1 a1 a2 a2 a3 a3"
+    "b0 b1 b2 b3 b4 b5 b6"
+    "c0 c1 c2 c3 c4 c5 c6"
+    "d0 d1 d2 d3 d4 d5 d6"
+    "e0 e1 e2 e3 e4 e5 e6" ;
+
+    align-items: center;
+    
+    left : 100%; 
+    transition: 0.25s;
+
+}
+
+.fiche:hover {
+    z-index: 100;
+}
+
+
+#buttonFermeFiche {
+    background: rgb(128, 0, 0);
+    border: solid 5px black;
+    border-radius: 10px;
+    box-shadow: 7.5px 7.5px 10px black;
+    min-height: 2.5vh;
+    min-width: 2.5vw;
+    max-height: 6vh;
+    max-width: 6vw;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
+    padding: 10px;
+    transition: 0.25s;
+    grid-area: e2;
+}
+
+#buttonFermeFiche:hover {
+    background: rgb(167, 0, 0);
+    box-shadow: 0px 0px 2px black;
+    scale: 0.95;
+}
+
+#buttonModifAgent {
+    font-size: clamp(15px, calc(0.8vh + 0.8vw) , 40px);
+    background: rgb(171, 184, 0);
+    border: solid 5px black;
+    border-radius: 10px;
+    box-shadow: 7.5px 7.5px 10px black;
+    min-height: 2vh;
+    min-width: 2vw;
+    max-height: 5vh;
+    max-width: 5vw;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
+    padding: 10px;
+    transition: 0.25s;
+    grid-area: a0;
+}
+
+#buttonModifAgent:hover {
+    background: rgb(238, 255, 0);
+    box-shadow: 0px 0px 2px black;
+    scale: 0.95;
+}
+
+#conteneurModificationFiche {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-areas: 
+    "a0 a1";
+}
+
+
+#BoutonValidationModifFiche{
+    font-size: clamp(15px, calc(0.8vh + 0.8vw) , 40px);
+    background: rgb(0, 184, 9);
+    border: solid 5px black;
+    border-radius: 10px;
+    box-shadow: 7.5px 7.5px 10px black;
+    min-height: 2vh;
+    min-width: 2vw;
+    max-height: 5vh;
+    max-width: 5vw;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 10px;
+    transition: 0.25s;
+    grid-area: a0;
+}
+#BoutonValidationModifFiche:hover {
+    background: rgb(0, 255, 0);
+    box-shadow: 0px 0px 2px black;
+    scale: 0.95;
+}
+
+#BoutonAnnulationModifFiche{
+    font-size: clamp(15px, calc(0.8vh + 0.8vw) , 40px);
+    background: rgb(184, 0, 0);
+    border: solid 5px black;
+    border-radius: 10px;
+    box-shadow: 7.5px 7.5px 10px black;
+    min-height: 2vh;
+    min-width: 2vw;
+    max-height: 5vh;
+    max-width: 5vw;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 10px;
+    transition: 0.25s;
+    grid-area: a1;
+}
+
+#BoutonAnnulationModifFiche:hover {
+    background: rgb(255, 0, 0);
+    box-shadow: 0px 0px 2px black;
+    scale: 0.95;
+}
+
+#boutonSupression {
+    font-size: clamp(15px, calc(0.8vh + 0.8vw) , 40px);
+    background: rgb(94, 0, 0);
+    border: solid 5px black;
+    border-radius: 10px;
+    box-shadow: 7.5px 7.5px 10px black;
+    height: 5vh;
+    width: 10vw;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 10px;
+    transition: 0.25s;
+    grid-area: e5;
+}
+#boutonSupression:hover {
+    background: rgb(255, 0, 0);
+    box-shadow: 0px 0px 2px black;
+    scale: 0.95;
+}
+
+
+.année {
+    font-size: clamp(10px, 1.7vmin, 30px);
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px black;
+    border-radius: 10px;
+    height: 5vh;
+
+
+}
+
+#nom {
+    grid-area: a1;
+    font-size: clamp(20px, calc(3vh + 3vw) , 50px);
+    padding: 25px;
+    border-bottom: solid 5px black;
+}
+
+#prenom {
+    grid-area: a2;
+    font-size: clamp(20px, calc(3vh + 3vw) , 50px);
+    padding: 25px;
+    border-bottom: solid 5px black;
+}
+
+
+#dpd {grid-area: a3;}
+
+.inputTxtFiche {
+    height: 40%;
+    width: 85%;
+    font-size: 80%;
+    border: solid 3px black;
+    border-radius: 10px;
+    margin: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#datesTis {
+    grid-area: d0;
+    padding-right: 7vw;
+    padding-left: 3vw;
+    border-right: solid 2px black;
+}
+
+#datesTir {
+    grid-area: c0;
+    padding-right: 7vw;
+    padding-left: 3vw;
+    border-right: solid 2px black;
+}
+
+#n-0 {grid-area: b1;}
+#n-1 {grid-area: b2;}
+#n-2 {grid-area: b3;}
+#n-3 {grid-area: b4;}
+#n-4 {grid-area: b5;}
+#n-5 {grid-area: b6;}
+
+#tr0 {grid-area: c1;}
+#tr1 {grid-area: c2;}
+#tr2 {grid-area: c3;}
+#tr3 {grid-area: c4;}
+#tr4 {grid-area: c5;}
+#tr5 {grid-area: c6;}
+
+#ts0 {grid-area: d1;}
+#ts1 {grid-area: d2;}
+#ts2 {grid-area: d3;}
+#ts3 {grid-area: d4;}
+#ts4 {grid-area: d5;}
+#ts5 {grid-area: d6;}

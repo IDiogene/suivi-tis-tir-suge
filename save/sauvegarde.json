@@ -160,12 +160,12 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 17
+      "finDans": 15
     },
     "datesTir": [],
     "datesTis": [],
-    "urgenceTir": 348,
-    "urgenceTis": 348
+    "urgenceTir": 350,
+    "urgenceTis": 350
   },
   {
     "nom": "bbg",
@@ -328,7 +328,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 20
+      "finDans": 18
     },
     "datesTir": [],
     "datesTis": [
@@ -347,8 +347,8 @@
         "comment": ""
       }
     ],
-    "urgenceTir": 345,
-    "urgenceTis": -655
+    "urgenceTir": 347,
+    "urgenceTis": -653
   },
   {
     "nom": "bhnhn",
@@ -511,12 +511,12 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 44
+      "finDans": 42
     },
     "datesTir": [],
     "datesTis": [],
-    "urgenceTir": 321,
-    "urgenceTis": 321
+    "urgenceTir": 323,
+    "urgenceTis": 323
   },
   {
     "nom": "eccvb",
@@ -679,7 +679,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 47
+      "finDans": 45
     },
     "datesTir": [
       {
@@ -706,8 +706,8 @@
         "comment": ""
       }
     ],
-    "urgenceTir": 318,
-    "urgenceTis": 318
+    "urgenceTir": 320,
+    "urgenceTis": 320
   },
   {
     "nom": "rvrv",
@@ -870,7 +870,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 78
+      "finDans": 76
     },
     "datesTir": [],
     "datesTis": [
@@ -889,8 +889,8 @@
         "comment": ""
       }
     ],
-    "urgenceTir": 287,
-    "urgenceTis": -713
+    "urgenceTir": 289,
+    "urgenceTis": -711
   },
   {
     "nom": "lafaurie",
@@ -1053,7 +1053,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 111
+      "finDans": 109
     },
     "datesTir": [
       {
@@ -1108,8 +1108,8 @@
         "comment": ""
       }
     ],
-    "urgenceTir": 164,
-    "urgenceTis": -746
+    "urgenceTir": 166,
+    "urgenceTis": -744
   },
   {
     "nom": "hugom",
@@ -1272,7 +1272,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 205
+      "finDans": 203
     },
     "datesTir": [
       {
@@ -1284,8 +1284,8 @@
       }
     ],
     "datesTis": [],
-    "urgenceTir": 160,
-    "urgenceTis": 160
+    "urgenceTir": 162,
+    "urgenceTis": 162
   },
   {
     "nom": "fv",
@@ -1448,7 +1448,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 11
+      "finDans": 9
     },
     "datesTir": [
       {
@@ -1467,8 +1467,8 @@
       }
     ],
     "datesTis": [],
-    "urgenceTir": -646,
-    "urgenceTis": 354
+    "urgenceTir": -644,
+    "urgenceTis": 356
   },
   {
     "nom": "gyvtè",
@@ -1631,7 +1631,7 @@
         "_owner": null,
         "_store": {}
       },
-      "finDans": 44
+      "finDans": 42
     },
     "datesTir": [
       {
@@ -1679,8 +1679,8 @@
         "comment": ""
       }
     ],
-    "urgenceTir": -679,
-    "urgenceTis": -679
+    "urgenceTir": -677,
+    "urgenceTis": -677
   },
   {
     "nom": "vrv",

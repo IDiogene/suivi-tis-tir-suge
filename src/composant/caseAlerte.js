@@ -27,11 +27,6 @@ const CaseAlerte = () => {
     );
 };
 
-
-
-
-
-
 // sous catégorie, soit tis soit tir
 const CaseAlerteType = ({ type, array }) => {
     const [survol, setSurvol] = useState(false);

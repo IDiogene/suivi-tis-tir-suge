@@ -34,3 +34,6 @@ Thumbs.db
 # Electron specific
 electron-builder.yml
 electron-builder.json
+
+# sauvegarde 
+/save

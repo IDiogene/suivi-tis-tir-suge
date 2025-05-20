@@ -36,4 +36,4 @@ electron-builder.yml
 electron-builder.json
 
 # sauvegarde 
-/save
+save/

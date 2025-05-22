@@ -6,6 +6,8 @@ import { Agent } from "../classPersonalisé/agent";
 import datesP from "../classPersonalisé/dateP";
 import agentContext from "../context/contextAgent";
 import { motion } from "framer-motion"; // perumutation fluides des agents
+import config from "../config/config";
+
 
 ///// grille
 const Grille = () => {
@@ -284,8 +286,27 @@ const BoutonAddAgent = (props) => {
 
   return (
     <>
-      {" "}
-      {addMode ? (
+      {config.demo && agentListing.length >= 10 ? 
+
+      <div style={{
+        backgroundColor: '#ff4d4f',
+        color: 'white',
+        padding: '10px 15px',
+        borderRadius: '8px',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        margin: '10px 0',
+        boxShadow: '0 5px 8px rgba(0, 0, 0, 0.15)',
+       }}>
+         ⚠️ Limite atteinte : nombre maximal d'agents autorisés en mode démo
+      </div>
+
+
+      :
+      
+      
+      (
+      addMode ? (
         <div id="addAgentWindos">
           <input
             type="text"
@@ -331,7 +352,9 @@ const BoutonAddAgent = (props) => {
         >
           +
         </div>
-      )}
+      )
+
+    ) }
     </>
   );
 };

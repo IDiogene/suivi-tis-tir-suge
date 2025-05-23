@@ -2,6 +2,7 @@
   user-select: none;
   list-style: none;
   font-size: clamp(12.5px, 2vh, 50px);
+
 }
 
 .App {

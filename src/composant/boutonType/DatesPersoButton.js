@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, use } from "react";
 import contextAgent from "../../context/contextAgent";
 import { Agent } from "../../classPersonalisé/agent";
 import datesP from "../../classPersonalisé/dateP";
@@ -30,7 +30,7 @@ const DatesPersoButton = (props) => {
           )
       : console.log("indexAgent null")
   );
-  
+  const [dateIsValid, setDateIsValid] = useState(true); // valide si la date est valide
   const [btnModify, setBtnModify] = useState(false); /// ouvre la fenetre de modif si true
 
 
@@ -47,6 +47,7 @@ const DatesPersoButton = (props) => {
           dateAujourdhui.annee
         )
   );
+  
 
   useEffect(() => {
     setIndexAgent(props.indexAgent);
@@ -57,7 +58,7 @@ const DatesPersoButton = (props) => {
 
 
   useEffect(() => {
-         setDate(
+    setDate(
       agentListing[indexAgent]
         ? !newDate
           ? agentListing[indexAgent][typeDate][indexDate]
@@ -99,6 +100,17 @@ const DatesPersoButton = (props) => {
     },
   }
 
+  // vérifie si la date est valide
+  useEffect(() => {
+    const valideDay = () => {
+    if (dateAttribution.mois === 2) {
+      return (dateAttribution.annee % 4 === 0 && (dateAttribution.annee % 100 !== 0 || dateAttribution.annee % 400 === 0)) ? 29 : 28; // Année bissextile
+    }
+    return [4, 6, 9, 11].includes(dateAttribution.mois) ? 30 : 31; // Mois avec 30 ou 31 jours
+  }
+    setDateIsValid(dateAttribution.jour <= valideDay())
+       
+  }, [dateAttribution])
 
 
   /*
@@ -246,7 +258,7 @@ const DatesPersoButton = (props) => {
   ) : (
 
     ////////////  3) bouton de modification d'une date existante
-    <div className="definiDate">
+    <div className="definiDate" onDoubleClick={(e) => e.stopPropagation()}>
       <input
         type="date"
         className="dateInput"
@@ -257,6 +269,10 @@ const DatesPersoButton = (props) => {
         }-${date.jour < 10 ? "0" + date.jour : date.jour}`}
       />
 
+
+      {
+        // bouton de selection de statut de la date
+      }
       <select
         name="validation"
         className="statusDate"
@@ -265,6 +281,11 @@ const DatesPersoButton = (props) => {
       >
         <option value="en attente">en attente</option>
 
+        { /* 
+          verifie si la date est bien passée, 
+          sans quoi elle ne peut être validée, 
+          et l'agent ne peut être absent
+          */ }
         {tempsAvant(dateAujourdhui, dateAttribution) <= 0 ? (
           <option value="validé">validé</option>
         ) : null}
@@ -276,6 +297,9 @@ const DatesPersoButton = (props) => {
         <option value="supression">supprimer la date definivement</option>
       </select>
 
+      {
+        // case pour les commentaires
+      }
       <textarea
         name="commentaires"
         className="commentaires"
@@ -287,28 +311,43 @@ const DatesPersoButton = (props) => {
         defaultValue={dateAttribution.comment}
       ></textarea>
 
+        {
+        ////// bouton de validation de la date
+        }
+
       <p
         className="btnValidation"
-        onClick={validation}
+        onClick={dateIsValid ? validation : null}
         style={{
           backgroundColor: (() => {
+            if (dateIsValid) {
             switch (dateAttribution.stat) {
               case "supression":
                 return "red";
               default:
                 return "green";
+            }} else {
+              return "gray";
             }
           })(),
         }}
       >
-        {dateAttribution.stat === "supression"
-          ? "supprimer la date"
-          : "valider"}
+        { dateIsValid ?  
+            dateAttribution.stat === "supression"
+              ? "supprimer la date"
+              : "valider"
+          : "invalide"
+        }
       </p>
 
+        {
+          // bouton d'annulation de la modification
+        }
       <p className="btnAnnuler" onClick={click}>
         annuler
       </p>
+
+
     </div>
   );
 };

@@ -180,22 +180,27 @@
 
 }
 
+#nom, #prenom {
+    font-size: clamp(20px, 5vmin , 50px);
+    padding: 5px;
+    border-bottom: solid 0.5vmin black;
+}
+
 #nom {
     grid-area: a1;
-    font-size: clamp(20px, calc(3vh + 3vw) , 50px);
-    padding: 25px;
-    border-bottom: solid 5px black;
 }
 
 #prenom {
     grid-area: a2;
-    font-size: clamp(20px, calc(3vh + 3vw) , 50px);
-    padding: 25px;
-    border-bottom: solid 5px black;
 }
 
 
-#dpd {grid-area: a3;}
+#dpd {
+    grid-area: a3;
+    font-size: clamp(10px, 2vmin , 50px);
+    font-weight: 700;
+    
+}
 
 .inputTxtFiche {
     height: 40%;
@@ -208,18 +213,21 @@
     padding-right: 5px;
 }
 
-#datesTis {
-    grid-area: d0;
+#datesTir, #datesTis {
+    font-size: clamp(10px, 3vmin , 50px);
+    display: flex;
+    font-weight: 700;
     padding-right: 7vw;
     padding-left: 3vw;
     border-right: solid 2px black;
 }
 
+#datesTis {
+    grid-area: d0;
+}
+
 #datesTir {
     grid-area: c0;
-    padding-right: 7vw;
-    padding-left: 3vw;
-    border-right: solid 2px black;
 }
 
 #n-0 {grid-area: b1;}

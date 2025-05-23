@@ -235,11 +235,47 @@ const BoutonAddAgent = (props) => {
   const [addMode, setAddMod] = useState(false);
 
   const [newAgent, setNewAgent] = useState({
-    nom: "",
-    prenom: "",
+    nom: null,
+    prenom: null,
     dpd: null,
   });
 
+  // verifie si tout les champs sont remplis et si la date est valide
+  const [newAgentValide, setNewAgentValide] = useState(false);
+  const [dateValide, setDateValide] = useState(true);
+
+  // fonction pour verifier si les champs sont remplis et si la date est valide
+  useEffect(() => {
+    if (newAgent.dpd && newAgent.nom && newAgent.prenom) {
+      if ( newAgent.dpd.jour && newAgent.dpd.mois && newAgent.dpd.annee ) {
+        setNewAgentValide(true);
+        setDateValide(true);
+      } else {
+        setDateValide(false);
+        setNewAgentValide(true);
+      }} else {
+    setNewAgentValide(false); }
+
+    const valideDay = () => {
+    if (newAgent.dpd.mois === 2) {
+      return (newAgent.dpd.annee % 4 === 0 && (newAgent.dpd.annee % 100 !== 0 || newAgent.dpd.annee % 400 === 0)) ? 29 : 28; // Année bissextile
+    }
+    return [4, 6, 9, 11].includes(newAgent.dpd.mois) ? 30 : 31; // Mois avec 30 ou 31 jours
+  }
+    setDateValide(newAgent.dpd ? newAgent.dpd.jour <= valideDay() ? true : false : false);
+
+    
+  }, [newAgent]);
+
+  // remise a zéro des champs de l'agent
+  useEffect(() => {
+    setNewAgent({
+      nom: "",
+      prenom: "",
+      dpd: null,
+    })}, [addMode]);
+
+   // fonction de modification de l'agent temporaire
   const modifAgent = (value, type) => {
     let setterNewAgent = { ...newAgent };
     if (type === "dpd") {
@@ -256,6 +292,7 @@ const BoutonAddAgent = (props) => {
     setNewAgent(setterNewAgent);
   };
 
+  // fonction d'ajout de l'agent en fonction de l'agent temporaire
   const addAgent = () => {
     if (
       newAgent.nom !== "" ||
@@ -277,7 +314,6 @@ const BoutonAddAgent = (props) => {
             )
           )
         );
-        console.log(newAgentListing);
         return newAgentListing;
       });
       setAddMod(false);
@@ -288,7 +324,12 @@ const BoutonAddAgent = (props) => {
     <>
       {config.demo && agentListing.length >= 10 ? 
 
-      <div style={{
+         /* 
+        Si le mode démo est activé et que le nombre d'agents dépasse 10, 
+        affiche un message d'alerte 
+        */ 
+      <div 
+        style={{
         backgroundColor: '#ff4d4f',
         color: 'white',
         padding: '10px 15px',
@@ -314,6 +355,7 @@ const BoutonAddAgent = (props) => {
             className="inputAddAgent"
             id="AddAgentImputNom"
             onBlur={(e) => modifAgent(e.target.value, "nom")}
+            onChange={(e) => modifAgent(e.target.value, "nom")}
           />
           <input
             type="text"
@@ -321,6 +363,7 @@ const BoutonAddAgent = (props) => {
             className="inputAddAgent"
             id="AddAgentImputPrenom"
             onBlur={(e) => modifAgent(e.target.value, "prenom")}
+            onChange={(e) => modifAgent(e.target.value, "prenom")}
           />
           <p id="txtAddAgent">date port d'arme : </p>
           <input
@@ -328,12 +371,24 @@ const BoutonAddAgent = (props) => {
             className="inputAddAgent"
             id="AddAgentImputDpd"
             onBlur={(e) => modifAgent(e.target.value, "dpd")}
+            onChange={(e) => modifAgent(e.target.value, "dpd")}
           />
-          <p id="btnAddAgentValider" className="btnAddAgent" onClick={addAgent}>
-            {newAgent.nom !== "" &&
-            newAgent.prenom !== "" &&
-            newAgent.dpd !== null
-              ? "valider"
+          <p 
+          id="btnAddAgentValider" 
+          className="btnAddAgent" 
+          style={{
+            backgroundColor: newAgentValide
+              ? dateValide
+                ? "green"
+                : "gray"
+              : "red",
+          }}
+          onClick={ 
+            newAgentValide ? dateValide ? addAgent : null : null
+            }
+          >
+            {newAgentValide ? 
+              dateValide ? "valider" : "date invalide"
               : "remplir tous les champs"}
           </p>
           <p

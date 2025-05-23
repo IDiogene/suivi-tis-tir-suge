@@ -12,7 +12,7 @@ const CaseAlerte = () => {
     // filtrer et trier les urgence tir et tis, on ne garde que les 5 premiers
     const urgence = (type) => {
         return agentListing.filter((agent) => {
-        return agent[`urgence${type}`] >= 120;
+        return agent[`urgence${type}`] >= 0;
     }).sort((a, b) => {
         return b[`urgence${type}`] - a[`urgence${type}`];
     }).slice(0, 5);}

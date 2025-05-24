@@ -22,8 +22,8 @@ const FicheAgent = () => {
   );
   const [modifier, setModifier] = useState(false);
   const [agentModifié, setAgentModifié] = useState({
-    nom: agent ? { ...agent.nom } : null,
-    prenom: agent ? { ...agent.prenom } : null,
+    name: agent ? { ...agent.name } : null,
+    surname: agent ? { ...agent.surname } : null,
     dateDePortArme: agent
       ? {
           jour: agent.dateDePortArme.dateDebut.jour,
@@ -52,8 +52,8 @@ const FicheAgent = () => {
   // enregistre des données temporaire modifier un agent, en lien avec 'boutonModif'
   useEffect(() => {
     setAgentModifié({
-      nom: agent ? agent.nom : null,
-      prenom: agent ? agent.prenom : null,
+      name: agent ? agent.name : null,
+      surname: agent ? agent.surname : null,
       dateDePortArme: agent
         ? {
             jour: agent.dateDePortArme.dateDebut.jour,
@@ -77,8 +77,8 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
       setAgentListing((prev) => {
         const newListing = [...prev];
         const newAgentModifié = new Agent(
-          agentModifié.nom,
-          agentModifié.prenom,
+          agentModifié.name,
+          agentModifié.surname,
           new datesP(
             agentModifié.dateDePortArme.jour,
             agentModifié.dateDePortArme.mois,
@@ -173,7 +173,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           <BoutonFermeFiche click={click} />
           <BoutonModif
             className="textes"
-            value="nom"
+            value="name"
             type="text"
             id="nom"
             modif={modifier}
@@ -181,7 +181,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           />
           <BoutonModif
             className="textes"
-            value="prenom"
+            value="surname"
             type="text"
             id="prenom"
             modif={modifier}

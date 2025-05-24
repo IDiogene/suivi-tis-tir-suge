@@ -9,9 +9,9 @@ import datesP from "./dateP";
 
 
 class Agent {
-  constructor(nom, prenom, dateDePortArme, datesTir = [], datesTis = []) {
-    this.nom = nom;
-    this.prenom = prenom;
+  constructor(name, surname, dateDePortArme, datesTir = [], datesTis = []) {
+    this.name = name;
+    this.surname = surname;
     this.dateDePortArme = {
       dateDebut: dateDePortArme,
       dateFin: this.recupDateFinPDA(dateDePortArme),

@@ -179,8 +179,8 @@ const DatesPersoButton = (props) => {
     setAgentListing((prev) => {
       let newAgentListing = [...prev];
       const agent = new Agent(
-        newAgentListing[indexAgent].nom,
-        newAgentListing[indexAgent].prenom,
+        newAgentListing[indexAgent].name,
+        newAgentListing[indexAgent].surname,
         new datesP(
           newAgentListing[indexAgent].dateDePortArme.dateDebut.jour,
           newAgentListing[indexAgent].dateDePortArme.dateDebut.mois,

@@ -58,8 +58,8 @@ export const AgentProvider = ({ children }) => {
         console.log("Données chargées :", data);
         const agents = data.map((agentData) => {
           return new Agent(
-            agentData.nom,
-            agentData.prenom,
+            agentData.name,
+            agentData.surname,
             new datesP(
               agentData.dateDePortArme.dateDebut.jour,
               agentData.dateDePortArme.dateDebut.mois,
@@ -75,8 +75,8 @@ export const AgentProvider = ({ children }) => {
         console.log("Données de démonstration utilisées");
         const agents = demoConfig.map((agentData) => {
           return new Agent(
-            agentData.nom,
-            agentData.prenom,
+            agentData.name,
+            agentData.surname,
             new datesP(
               agentData.dateDePortArme.dateDebut.jour,
               agentData.dateDePortArme.dateDebut.mois,

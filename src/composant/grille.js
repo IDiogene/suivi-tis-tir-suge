@@ -20,7 +20,7 @@ const Grille = () => {
         {agentListing.length > 0 ? (
           agentListing.map((element, index) => {
             return (
-              <LigneAgent key={element.nom + element.prenom} index={index} />
+              <LigneAgent key={element.name + element.surname} index={index} />
             );
           })
         ) : (
@@ -87,8 +87,8 @@ const LigneTitre = () => {
       case "Nom":
         newListing.sort((a, b) =>
           triePrécedent.ordre === "asc"
-            ? a.nom.localeCompare(b.nom)
-            : b.nom.localeCompare(a.nom)
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
         );
         break;
       case "Date de port d'arme":
@@ -202,7 +202,7 @@ const LigneAgent = (props) => {
     >
       <ButtonTypeBase
         className="textesListe"
-        content={agent.nom + " " + agent.prenom}
+        content={agent.name + " " + agent.surname}
         id="nomLi"
       />
       <ButtonTypeAlternative
@@ -235,7 +235,7 @@ const BoutonAddAgent = (props) => {
   const [addMode, setAddMod] = useState(false);
 
   const [newAgent, setNewAgent] = useState({
-    nom: null,
+    name: null,
     prenom: null,
     dpd: null,
   });
@@ -246,7 +246,7 @@ const BoutonAddAgent = (props) => {
 
   // fonction pour verifier si les champs sont remplis et si la date est valide
   useEffect(() => {
-    if (newAgent.dpd && newAgent.nom && newAgent.prenom) {
+    if (newAgent.dpd && newAgent.name && newAgent.surname) {
       if ( newAgent.dpd.jour && newAgent.dpd.mois && newAgent.dpd.annee ) {
         setNewAgentValide(true);
         setDateValide(true);
@@ -270,8 +270,8 @@ const BoutonAddAgent = (props) => {
   // remise a zéro des champs de l'agent
   useEffect(() => {
     setNewAgent({
-      nom: "",
-      prenom: "",
+      name: "",
+      surname: "",
       dpd: null,
     })}, [addMode]);
 
@@ -295,16 +295,16 @@ const BoutonAddAgent = (props) => {
   // fonction d'ajout de l'agent en fonction de l'agent temporaire
   const addAgent = () => {
     if (
-      newAgent.nom !== "" ||
-      newAgent.prenom !== "" ||
+      newAgent.name !== "" ||
+      newAgent.surname !== "" ||
       newAgent.dpd !== null
     ) {
       setAgentListing((prev) => {
         let newAgentListing = [...prev];
         newAgentListing.push(
           new Agent(
-            newAgent.nom,
-            newAgent.prenom,
+            newAgent.name,
+            newAgent.surname,
             new datesP(
               newAgent.dpd.jour,
               newAgent.dpd.mois,

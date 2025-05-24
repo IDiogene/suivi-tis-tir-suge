@@ -44,11 +44,11 @@ const CaseAlerteType = ({ type, array }) => {
         return (
                 <p 
                 className='nomAlerte' 
-                key={agent.nom + index}
+                key={agent.name + index}
                 onMouseEnter={(e) => hover("enter", agent)}
                 onMouseLeave={(e) => hover("leave", agent)}
                 >
-                    {agent.nom}
+                    {agent.name}
                 </p>
         );
     });
@@ -60,7 +60,7 @@ const CaseAlerteType = ({ type, array }) => {
                 {
                     agentSurvolé !== null ? 
                     <div>
-                        <p>{agentSurvolé.nom + ' ' + agentSurvolé.prenom}</p>
+                        <p>{agentSurvolé.name + ' ' + agentSurvolé.surname}</p>
 
                         <p>{
                         agentSurvolé.anneeCourante.dateFin.delaisFormat1()

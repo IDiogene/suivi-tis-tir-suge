@@ -58,15 +58,15 @@ export const AgentProvider = ({ children }) => {
         console.log("Données chargées :", data);
         const agents = data.map((agentData) => {
           return new Agent(
-            agentData.name,
-            agentData.surname,
+            agentData.name || agentData.nom,
+            agentData.surname || agentData.prenom,
             new datesP(
-              agentData.weaponPermitDate.startDate.jour,
-              agentData.weaponPermitDate.startDate.mois,
-              agentData.weaponPermitDate.startDate.annee
+              agentData.weaponPermitDate?.startDate?.jour || agentData.dateDePortArme?.dateDebut?.jour,
+              agentData.weaponPermitDate?.startDate?.mois || agentData.dateDePortArme?.dateDebut?.mois,
+              agentData.weaponPermitDate?.startDate?.annee || agentData.dateDePortArme?.dateDebut?.annee
             ),
-            agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
-            agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))
+            agentData.datesTir.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)),
+            agentData.datesTis.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment))
           );
         });
         setAgentListing(agents);
@@ -80,7 +80,7 @@ export const AgentProvider = ({ children }) => {
             new datesP(
               agentData.weaponPermitDate.startDate.jour,
               agentData.weaponPermitDate.startDate.mois,
-              agentData.weaponPermitDate.startDate.annee
+              agentData.weaponPermitDate.startDate.annee,
             ),
             agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
             agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))

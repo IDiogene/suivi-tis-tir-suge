@@ -24,11 +24,11 @@ const FicheAgent = () => {
   const [agentModifié, setAgentModifié] = useState({
     name: agent ? { ...agent.name } : null,
     surname: agent ? { ...agent.surname } : null,
-    dateDePortArme: agent
+    weaponPermitDate: agent
       ? {
-          jour: agent.dateDePortArme.dateDebut.jour,
-          mois: agent.dateDePortArme.dateDebut.mois,
-          annee: agent.dateDePortArme.dateDebut.annee,
+          jour: agent.weaponPermitDate.startDate.jour,
+          mois: agent.weaponPermitDate.startDate.mois,
+          annee: agent.weaponPermitDate.startDate.annee,
         }
       : null,
   });
@@ -54,11 +54,11 @@ const FicheAgent = () => {
     setAgentModifié({
       name: agent ? agent.name : null,
       surname: agent ? agent.surname : null,
-      dateDePortArme: agent
+      weaponPermitDate: agent
         ? {
-            jour: agent.dateDePortArme.dateDebut.jour,
-            mois: agent.dateDePortArme.dateDebut.mois,
-            annee: agent.dateDePortArme.dateDebut.annee,
+            jour: agent.weaponPermitDate.startDate.jour,
+            mois: agent.weaponPermitDate.startDate.mois,
+            annee: agent.weaponPermitDate.startDate.annee,
           }
         : null,
     });
@@ -80,9 +80,9 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           agentModifié.name,
           agentModifié.surname,
           new datesP(
-            agentModifié.dateDePortArme.jour,
-            agentModifié.dateDePortArme.mois,
-            agentModifié.dateDePortArme.annee
+            agentModifié.weaponPermitDate.jour,
+            agentModifié.weaponPermitDate.mois,
+            agentModifié.weaponPermitDate.annee
           ),
           agentListing[indexAgent].datesTir,
           agentListing[indexAgent].datesTis
@@ -191,7 +191,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           <BoutonModif
             className="textes"
             type="date"
-            value="dateDePortArme"
+            value="weaponPermitDate"
             id="dpd"
             modif={modifier}
             setterAgent={setAgentModifié}
@@ -304,14 +304,14 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
         ) : modif && type === "date" ? (
           <input
             type="date"
-            defaultValue={`${content.dateDebut.annee}-${
-              content.dateDebut.mois < 10
-                ? "0" + content.dateDebut.mois
-                : content.dateDebut.mois
+            defaultValue={`${content.startDate.annee}-${
+              content.startDate.mois < 10
+                ? "0" + content.startDate.mois
+                : content.startDate.mois
             }-${
-              content.dateDebut.jour < 10
-                ? "0" + content.dateDebut.jour
-                : content.dateDebut.jour
+              content.startDate.jour < 10
+                ? "0" + content.startDate.jour
+                : content.startDate.jour
             }`}
             className="inputTxtFiche"
             onBlur={(e) =>
@@ -330,7 +330,7 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
             {
               <>
                 {" "}
-                Port d'arme <br /> {content.dateDebut.afficherDateFormat1()}{" "}
+                Port d'arme <br /> {content.startDate.afficherDateFormat1()}{" "}
                 <br /> au <br /> {content.dateFin.afficherDateFormat1()}{" "}
               </>
             }

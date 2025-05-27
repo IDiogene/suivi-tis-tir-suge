@@ -182,9 +182,9 @@ const DatesPersoButton = (props) => {
         newAgentListing[indexAgent].name,
         newAgentListing[indexAgent].surname,
         new datesP(
-          newAgentListing[indexAgent].dateDePortArme.dateDebut.jour,
-          newAgentListing[indexAgent].dateDePortArme.dateDebut.mois,
-          newAgentListing[indexAgent].dateDePortArme.dateDebut.annee
+          newAgentListing[indexAgent].weaponPermitDate.startDate.jour,
+          newAgentListing[indexAgent].weaponPermitDate.startDate.mois,
+          newAgentListing[indexAgent].weaponPermitDate.startDate.annee
         ),
         newDateListe(typeDate, "datesTir"),
         newDateListe(typeDate, "datesTis")

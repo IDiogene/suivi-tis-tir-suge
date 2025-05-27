@@ -12,7 +12,7 @@ const ListeDates = (props) => {
     props.fiche ? agentSelectionné.agent : agentListing[index]
   );
   const [dateFormat, setDateFormat] = useState(
-    props.fiche ? ["debut", "fin"] : ["dateDebut", "dateFin"]
+    props.fiche ? ["debut", "fin"] : ["startDate", "dateFin"]
   );
 
   const [dateListe, setDateListe] = useState(agent[props.typeDate]);

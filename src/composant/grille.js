@@ -94,10 +94,10 @@ const LigneTitre = () => {
       case "Date de port d'arme":
         newListing.sort((a, b) =>
           triePrécedent.ordre === "asc"
-            ? a.dateDePortArme.dateFin.delais() -
-              b.dateDePortArme.dateFin.delais()
-            : b.dateDePortArme.dateFin.delais() -
-              a.dateDePortArme.dateFin.delais()
+            ? a.weaponPermitDate.dateFin.delais() -
+              b.weaponPermitDate.dateFin.delais()
+            : b.weaponPermitDate.dateFin.delais() -
+              a.weaponPermitDate.dateFin.delais()
         );
         break;
       case "Année en courrante":
@@ -194,7 +194,7 @@ const LigneAgent = (props) => {
       agent={agent}
       style={{
         backgroundColor: (() => {
-          if (agent.dateDePortArme.dateFin.delais() <= 365) {
+          if (agent.weaponPermitDate.dateFin.delais() <= 365) {
             return "rgb(71, 0, 0)";
           }
         })(),
@@ -207,11 +207,11 @@ const LigneAgent = (props) => {
       />
       <ButtonTypeAlternative
         className="textesListe"
-        content={agent.dateDePortArme.dateFin.delaisFormat1()}
+        content={agent.weaponPermitDate.dateFin.delaisFormat1()}
         content2={
-          `${agent.dateDePortArme.dateDebut.afficherDateFormat1()}` +
+          `${agent.weaponPermitDate.startDate.afficherDateFormat1()}` +
           " au " +
-          `${agent.dateDePortArme.dateFin.afficherDateFormat1()}`
+          `${agent.weaponPermitDate.dateFin.afficherDateFormat1()}`
         }
         id="dateDePortArmeLi"
       />
@@ -236,7 +236,7 @@ const BoutonAddAgent = (props) => {
 
   const [newAgent, setNewAgent] = useState({
     name: null,
-    prenom: null,
+    surname: null,
     dpd: null,
   });
 
@@ -263,6 +263,7 @@ const BoutonAddAgent = (props) => {
     return [4, 6, 9, 11].includes(newAgent.dpd.mois) ? 30 : 31; // Mois avec 30 ou 31 jours
   }
     setDateValide(newAgent.dpd ? newAgent.dpd.jour <= valideDay() ? true : false : false);
+    console.log(newAgentValide, dateValide, newAgent);
 
     
   }, [newAgent]);
@@ -354,16 +355,16 @@ const BoutonAddAgent = (props) => {
             placeholder="nom"
             className="inputAddAgent"
             id="AddAgentImputNom"
-            onBlur={(e) => modifAgent(e.target.value, "nom")}
-            onChange={(e) => modifAgent(e.target.value, "nom")}
+            onBlur={(e) => modifAgent(e.target.value, "name")}
+            onChange={(e) => modifAgent(e.target.value, "name")}
           />
           <input
             type="text"
             placeholder="prenom"
             className="inputAddAgent"
             id="AddAgentImputPrenom"
-            onBlur={(e) => modifAgent(e.target.value, "prenom")}
-            onChange={(e) => modifAgent(e.target.value, "prenom")}
+            onBlur={(e) => modifAgent(e.target.value, "surname")}
+            onChange={(e) => modifAgent(e.target.value, "surname")}
           />
           <p id="txtAddAgent">date port d'arme : </p>
           <input

@@ -9,12 +9,12 @@ import datesP from "./dateP";
 
 
 class Agent {
-  constructor(name, surname, dateDePortArme, datesTir = [], datesTis = []) {
+  constructor(name, surname, weaponPermitDate, datesTir = [], datesTis = []) {
     this.name = name;
     this.surname = surname;
-    this.dateDePortArme = {
-      dateDebut: dateDePortArme,
-      dateFin: this.recupDateFinPDA(dateDePortArme),
+    this.weaponPermitDate = {
+      startDate: weaponPermitDate,
+      dateFin: this.recupDateFinPDA(weaponPermitDate),
     };
     this.datesAnniversairePDA = this.creerPlageAnniversaire();
     this.anneeCourante = this.recupAnneeCourante();
@@ -24,11 +24,11 @@ class Agent {
     this.urgenceTis = this.calculUrgence(this.datesTis);
   }
 
-  recupDateFinPDA(dateDePortArme) {
+  recupDateFinPDA(weaponPermitDate) {
     let dateFin = new datesP(
-      dateDePortArme.jour,
-      dateDePortArme.mois,
-      dateDePortArme.annee
+      weaponPermitDate.jour,
+      weaponPermitDate.mois,
+      weaponPermitDate.annee
     );
     addDate(dateFin, -1, 0, 5);
     return dateFin;
@@ -36,9 +36,9 @@ class Agent {
 
   calculDateAnniversaire(jour, mois, année) {
     let date = new datesP(
-      this.dateDePortArme.dateDebut.jour,
-      this.dateDePortArme.dateDebut.mois,
-      this.dateDePortArme.dateDebut.annee
+      this.weaponPermitDate.startDate.jour,
+      this.weaponPermitDate.startDate.mois,
+      this.weaponPermitDate.startDate.annee
     );
     addDate(date, jour, mois, année);
     return date;
@@ -92,7 +92,7 @@ class Agent {
             dates[testDate].fin.annee
           );
           return {
-            dateDebut: dates[testDate].debut,
+            startDate: dates[testDate].debut,
             dateFin: dFin,
             string: (
               <div>
@@ -114,7 +114,7 @@ class Agent {
           );
 
           return {
-            dateDebut: dates.n5.debut,
+            startDate: dates.n5.debut,
             dateFin: dFin,
             string: (
               <div>
@@ -137,7 +137,7 @@ class Agent {
     if (this.anneeCourante) {
       // Calculer le nombre de dates dans la plage spécifiée
       const nombreDates = trieDates(
-        this.anneeCourante.dateDebut,
+        this.anneeCourante.startDate,
         consideringDates,
         this.anneeCourante.dateFin
       ).length;

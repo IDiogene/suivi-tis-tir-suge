@@ -61,9 +61,9 @@ export const AgentProvider = ({ children }) => {
             agentData.name,
             agentData.surname,
             new datesP(
-              agentData.dateDePortArme.dateDebut.jour,
-              agentData.dateDePortArme.dateDebut.mois,
-              agentData.dateDePortArme.dateDebut.annee
+              agentData.weaponPermitDate.startDate.jour,
+              agentData.weaponPermitDate.startDate.mois,
+              agentData.weaponPermitDate.startDate.annee
             ),
             agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
             agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))
@@ -78,9 +78,9 @@ export const AgentProvider = ({ children }) => {
             agentData.name,
             agentData.surname,
             new datesP(
-              agentData.dateDePortArme.dateDebut.jour,
-              agentData.dateDePortArme.dateDebut.mois,
-              agentData.dateDePortArme.dateDebut.annee
+              agentData.weaponPermitDate.startDate.jour,
+              agentData.weaponPermitDate.startDate.mois,
+              agentData.weaponPermitDate.startDate.annee
             ),
             agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
             agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))

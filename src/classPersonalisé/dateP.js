@@ -21,18 +21,6 @@ class datesP {
   afficherDateFormat1() {
     return `${this.jour} ${moisEnLettre(this.mois)} ${this.annee}`;
   }
-  afficherDateFormat2() {
-    return `Reste ${this.ans} ans, ${this.mois} mois, et ${this.jour} jours`;
-  }
-  jours() {
-    return this.jour;
-  }
-  mois() {
-    return this.mois;
-  }
-  annee() {
-    return this.annee;
-  }
   delais() {
     let delais = tempsAvant(dateAujourdhui, this);
     return delais;

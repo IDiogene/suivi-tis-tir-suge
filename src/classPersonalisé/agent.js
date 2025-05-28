@@ -14,10 +14,11 @@ class Agent {
     this.surname = surname;
     this.weaponPermitDate = {
       startDate: weaponPermitDate,
-      dateFin: this.recupDateFinPDA(weaponPermitDate),
+      endDate: this.recupDateFinPDA(weaponPermitDate),
     };
-    this.datesAnniversairePDA = this.creerPlageAnniversaire();
-    this.anneeCourante = this.recupAnneeCourante();
+    this.permitAnniversaryDates = this.createWeaponPermitAnniversaryDate
+();
+    this.currentYear = this.getCurrentYear();
     this.datesTir = datesTir;
     this.datesTis = datesTis;
     this.urgenceTir = this.calculUrgence(this.datesTir);
@@ -25,13 +26,13 @@ class Agent {
   }
 
   recupDateFinPDA(weaponPermitDate) {
-    let dateFin = new datesP(
+    let endDate = new datesP(
       weaponPermitDate.jour,
       weaponPermitDate.mois,
       weaponPermitDate.annee
     );
-    addDate(dateFin, -1, 0, 5);
-    return dateFin;
+    addDate(endDate, -1, 0, 5);
+    return endDate;
   }
 
   calculDateAnniversaire(jour, mois, année) {
@@ -44,7 +45,7 @@ class Agent {
     return date;
   }
 
-  creerPlageAnniversaire() {
+  createWeaponPermitAnniversaryDate() {
     return {
       n6: {
         debut: this.calculDateAnniversaire(0, 0, 5),
@@ -73,8 +74,8 @@ class Agent {
     };
   }
 
-  recupAnneeCourante() {
-    const dates = this.datesAnniversairePDA;
+  getCurrentYear() {
+    const dates = this.permitAnniversaryDates;
     let dFin = null;
 
     {
@@ -93,7 +94,7 @@ class Agent {
           );
           return {
             startDate: dates[testDate].debut,
-            dateFin: dFin,
+            endDate: dFin,
             string: (
               <div>
                 {dates[testDate].debut.afficherDate()} <br /> II <br />{" "}
@@ -115,7 +116,7 @@ class Agent {
 
           return {
             startDate: dates.n5.debut,
-            dateFin: dFin,
+            endDate: dFin,
             string: (
               <div>
                 {dates.n5.debut.afficherDate()} <br /> II <br />{" "}
@@ -134,18 +135,18 @@ class Agent {
       (date) => date.stat !== "annulé" && date.stat !== "absence agent"
     );
     let facteurDate = 0;
-    if (this.anneeCourante) {
+    if (this.currentYear) {
       // Calculer le nombre de dates dans la plage spécifiée
       const nombreDates = trieDates(
-        this.anneeCourante.startDate,
+        this.currentYear.startDate,
         consideringDates,
-        this.anneeCourante.dateFin
+        this.currentYear.endDate
       ).length;
 
       // Définir la valeur de "facteurDate" en fonction du nombre de dates
       if (nombreDates === 0) {
         facteurDate = 0;
-      } else if (nombreDates === 1 && this.anneeCourante.finDans > 60) {
+      } else if (nombreDates === 1 && this.currentYear.finDans > 60) {
         facteurDate = 90;
       } else if (nombreDates >= 2) {
         facteurDate = 1000;
@@ -155,7 +156,7 @@ class Agent {
 
       // Retourner le calcul final
 
-      return 365 - (this.anneeCourante.finDans + facteurDate);
+      return 365 - (this.currentYear.finDans + facteurDate);
     } else {
       return 0;
     }

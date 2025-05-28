@@ -94,19 +94,19 @@ const LigneTitre = () => {
       case "Date de port d'arme":
         newListing.sort((a, b) =>
           triePrécedent.ordre === "asc"
-            ? a.weaponPermitDate.dateFin.delais() -
-              b.weaponPermitDate.dateFin.delais()
-            : b.weaponPermitDate.dateFin.delais() -
-              a.weaponPermitDate.dateFin.delais()
+            ? a.weaponPermitDate.endDate.delais() -
+              b.weaponPermitDate.endDate.delais()
+            : b.weaponPermitDate.endDate.delais() -
+              a.weaponPermitDate.endDate.delais()
         );
         break;
       case "Année en courrante":
         newListing.sort((a, b) =>
           triePrécedent.ordre === "asc"
-            ? a.anneeCourante.dateFin.delais() -
-              b.anneeCourante.dateFin.delais()
-            : b.anneeCourante.dateFin.delais() -
-              a.anneeCourante.dateFin.delais()
+            ? a.currentYear.endDate.delais() -
+              b.currentYear.endDate.delais()
+            : b.currentYear.endDate.delais() -
+              a.currentYear.endDate.delais()
         );
         break;
       case "Date des tirs":
@@ -194,7 +194,7 @@ const LigneAgent = (props) => {
       agent={agent}
       style={{
         backgroundColor: (() => {
-          if (agent.weaponPermitDate.dateFin.delais() <= 365) {
+          if (agent.weaponPermitDate.endDate.delais() <= 365) {
             return "rgb(71, 0, 0)";
           }
         })(),
@@ -207,18 +207,18 @@ const LigneAgent = (props) => {
       />
       <ButtonTypeAlternative
         className="textesListe"
-        content={agent.weaponPermitDate.dateFin.delaisFormat1()}
+        content={agent.weaponPermitDate.endDate.delaisFormat1()}
         content2={
           `${agent.weaponPermitDate.startDate.afficherDateFormat1()}` +
           " au " +
-          `${agent.weaponPermitDate.dateFin.afficherDateFormat1()}`
+          `${agent.weaponPermitDate.endDate.afficherDateFormat1()}`
         }
         id="dateDePortArmeLi"
       />
       <ButtonTypeAlternative
         className="textesListe"
-        content={agent.anneeCourante.dateFin.delaisFormat1()}
-        content2={agent.anneeCourante.dateFin.afficherDateFormat1()}
+        content={agent.currentYear.endDate.delaisFormat1()}
+        content2={agent.currentYear.endDate.afficherDateFormat1()}
         id="dateDePortArmeLi"
       />
       <ListeDates indexAgent={index} typeDate="datesTir" />

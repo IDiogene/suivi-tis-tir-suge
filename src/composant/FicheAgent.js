@@ -113,8 +113,8 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
         : 0;
 
     if (agent) {
-      for (const key in agent.datesAnniversairePDA) {
-        const date = agent.datesAnniversairePDA[key];
+      for (const key in agent.permitAnniversaryDates) {
+        const date = agent.permitAnniversaryDates[key];
         if (date.debut.delais() < lastDate) {
           buttons.push(
             <ButtonTypeBase
@@ -331,7 +331,7 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
               <>
                 {" "}
                 Port d'arme <br /> {content.startDate.afficherDateFormat1()}{" "}
-                <br /> au <br /> {content.dateFin.afficherDateFormat1()}{" "}
+                <br /> au <br /> {content.endDate.afficherDateFormat1()}{" "}
               </>
             }
           </a>

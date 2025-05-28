@@ -63,14 +63,14 @@ const CaseAlerteType = ({ type, array }) => {
                         <p>{agentSurvolé.name + ' ' + agentSurvolé.surname}</p>
 
                         <p>{
-                        agentSurvolé.anneeCourante.dateFin.delaisFormat1()
+                        agentSurvolé.currentYear.endDate.delaisFormat1()
                          +
                         ' pour placer '
                          + 
                         (2 - trieDates(
-                            agentSurvolé.anneeCourante.startDate, 
+                            agentSurvolé.currentYear.startDate, 
                             agentSurvolé[`dates${type}`].filter((date) => {return date.stat !== "annulé" && date.stat !== "absence agent"}), 
-                            agentSurvolé.anneeCourante.dateFin).length) 
+                            agentSurvolé.currentYear.endDate).length) 
                             + 
                             ' ' 
                             + 

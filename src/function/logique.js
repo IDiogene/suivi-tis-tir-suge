@@ -51,15 +51,15 @@ const dateEntreDeux = (dateMin, dateComparee, dateMax) => {
 }
 
 // trie une liste de date entre deux dates (necessite la fonction 'dateEntreDeux')
-const trieDates = (startDate, liste, dateFin) => {
+const trieDates = (startDate, liste, endDate) => {
   let listeTrie = [];
-  if (startDate && dateFin && liste) {
+  if (startDate && endDate && liste) {
   for (let i = 0; i < liste.length; i++) {
     if (
       dateEntreDeux(
         startDate,
         liste[i],
-        dateFin,
+        endDate,
       )
     ) {
       listeTrie.push(liste[i]);

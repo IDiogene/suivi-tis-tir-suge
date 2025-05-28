@@ -12,12 +12,12 @@ const ListeDates = (props) => {
     props.fiche ? agentSelectionné.agent : agentListing[index]
   );
   const [dateFormat, setDateFormat] = useState(
-    props.fiche ? ["debut", "fin"] : ["startDate", "dateFin"]
+    props.fiche ? ["debut", "fin"] : ["startDate", "endDate"]
   );
 
   const [dateListe, setDateListe] = useState(agent[props.typeDate]);
   const [anneeCourante, setAnneeCourante] = useState(
-    props.fiche ? props.annéeCouranteFiche : agent.anneeCourante
+    props.fiche ? props.annéeCouranteFiche : agent.currentYear
   );
   const [delais, setDelais] = useState(anneeCourante[dateFormat[1]].delais());
 
@@ -41,7 +41,7 @@ const ListeDates = (props) => {
   useEffect(() => {
     setDateListe(agent[props.typeDate]);
     setAnneeCourante(
-      props.fiche ? props.annéeCouranteFiche : agent.anneeCourante
+      props.fiche ? props.annéeCouranteFiche : agent.currentYear
     );
   }, [agent]);
 

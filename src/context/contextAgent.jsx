@@ -13,7 +13,7 @@ const agentContext = createContext()
   fonctionne avec Electron
 */
 // sauvegarde
-const appelElectron = (liste) => {
+const save = (liste) => {
     ipcRenderer.invoke('save', liste)
         .then((result) => {
             //console.log("sauvegarde effectué");
@@ -48,7 +48,7 @@ export const AgentProvider = ({ children }) => {
 
     useEffect(() => {
        if ( dataCharged ) {
-        appelElectron(JSON.parse(JSON.stringify(agentListing)));}
+        save(JSON.parse(JSON.stringify(agentListing)));}
   }, [agentListing]);
 
   useEffect(() => {

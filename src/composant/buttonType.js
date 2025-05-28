@@ -64,7 +64,7 @@ const PdfButton = (props) => {
       body: agentListing.map((agent) => {
         return [
           agent.nom + " " + agent.surname,
-          agent.datesTir
+          agent.shootingTrainingDates
             .filter((date) =>
               ["validé", "annulé", "absence agent"].includes(date.stat)
             )

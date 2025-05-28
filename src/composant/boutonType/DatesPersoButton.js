@@ -186,7 +186,7 @@ const DatesPersoButton = (props) => {
           newAgentListing[indexAgent].weaponPermitDate.startDate.mois,
           newAgentListing[indexAgent].weaponPermitDate.startDate.annee
         ),
-        newDateListe(typeDate, "datesTir"),
+        newDateListe(typeDate, "shootingTrainingDates"),
         newDateListe(typeDate, "datesTis")
       );
       newAgentListing[indexAgent] = agent;

@@ -84,8 +84,8 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
             agentModifié.weaponPermitDate.mois,
             agentModifié.weaponPermitDate.annee
           ),
-          agentListing[indexAgent].datesTir,
-          agentListing[indexAgent].datesTis
+          agentListing[indexAgent].shootingTrainingDates,
+          agentListing[indexAgent].shootingTrainingDates
         );
 
         newListing[indexAgent] = newAgentModifié;
@@ -104,8 +104,8 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
     let id = 0;
     const buttons = [];
     let lastDate =
-      agent && [...agent.datesTir, ...agent.datesTis].length > 0
-        ? [...agent.datesTir, ...agent.datesTis]
+      agent && [...agent.shootingTrainingDates, ...agent.datesTis].length > 0
+        ? [...agent.shootingTrainingDates, ...agent.datesTis]
             .reduce((a, b) => {
               return a.delais() > b.delais() ? a : b;
             })
@@ -135,7 +135,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           buttons.push(
             <ListeDates
               fiche={true}
-              typeDate="datesTir"
+              typeDate="shootingTrainingDates"
               date={date}
               annéeCouranteFiche={date}
               indexAgent={indexAgent}

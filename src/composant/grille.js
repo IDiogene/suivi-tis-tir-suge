@@ -221,7 +221,7 @@ const LigneAgent = (props) => {
         content2={agent.currentYear.endDate.afficherDateFormat1()}
         id="dateDePortArmeLi"
       />
-      <ListeDates indexAgent={index} typeDate="datesTir" />
+      <ListeDates indexAgent={index} typeDate="shootingTrainingDates" />
       <ListeDates indexAgent={index} typeDate="datesTis" />
     </motion.div>
   ) : (

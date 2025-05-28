@@ -65,7 +65,7 @@ export const AgentProvider = ({ children }) => {
               agentData.weaponPermitDate?.startDate?.mois || agentData.dateDePortArme?.dateDebut?.mois,
               agentData.weaponPermitDate?.startDate?.annee || agentData.dateDePortArme?.dateDebut?.annee
             ),
-            agentData.datesTir.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)),
+            agentData.shootingTrainingDates?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment))  , 
             agentData.datesTis.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment))
           );
         });
@@ -82,7 +82,7 @@ export const AgentProvider = ({ children }) => {
               agentData.weaponPermitDate.startDate.mois,
               agentData.weaponPermitDate.startDate.annee,
             ),
-            agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
+            agentData.shootingTrainingDates.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
             agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))
           );
         });

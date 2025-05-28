@@ -112,15 +112,15 @@ const LigneTitre = () => {
       case "Date des tirs":
         newListing.sort((a, b) =>
           triePrécedent.ordre === "desc"
-            ? a.urgenceTir - b.urgenceTir
-            : b.urgenceTir - a.urgenceTir
+            ? a.shootingUrgency  - b.shootingUrgency 
+            : b.shootingUrgency  - a.shootingUrgency 
         );
         break;
       case "Date des tis":
         newListing.sort((a, b) =>
           triePrécedent.ordre === "desc"
-            ? a.urgenceTis - b.urgenceTis
-            : b.urgenceTis - a.urgenceTis
+            ? a.tisUrgency - b.tisUrgency
+            : b.tisUrgency - a.tisUrgency
         );
         break;
     }
@@ -222,7 +222,7 @@ const LigneAgent = (props) => {
         id="dateDePortArmeLi"
       />
       <ListeDates indexAgent={index} typeDate="shootingTrainingDates" />
-      <ListeDates indexAgent={index} typeDate="datesTis" />
+      <ListeDates indexAgent={index} typeDate="tisTrainingDates" />
     </motion.div>
   ) : (
     <div>vide</div>

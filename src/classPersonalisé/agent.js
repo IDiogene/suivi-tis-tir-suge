@@ -9,7 +9,7 @@ import datesP from "./dateP";
 
 
 class Agent {
-  constructor(name, surname, weaponPermitDate, shootingDates = [], datesTis = []) {
+  constructor(name, surname, weaponPermitDate, shootingDates = [], tisDates = []) {
     this.name = name;
     this.surname = surname;
     this.weaponPermitDate = {
@@ -20,9 +20,9 @@ class Agent {
 ();
     this.currentYear = this.getCurrentYear();
     this.shootingTrainingDates = shootingDates;
-    this.datesTis = datesTis;
-    this.urgenceTir = this.calculUrgence(this.shootingTrainingDates);
-    this.urgenceTis = this.calculUrgence(this.datesTis);
+    this.tisTrainingDates = tisDates;
+    this.shootingUrgency  = this.calculUrgence(this.shootingTrainingDates);
+    this.tisUrgency = this.calculUrgence(this.tisTrainingDates);
   }
 
   recupDateFinPDA(weaponPermitDate) {

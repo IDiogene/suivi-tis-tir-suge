@@ -12,17 +12,17 @@ const CaseAlerte = () => {
     // filtrer et trier les urgence tir et tis, on ne garde que les 5 premiers
     const urgence = (type) => {
         return agentListing.filter((agent) => {
-        return agent[`urgence${type}`] >= 0;
+        return agent[type] >= 0;
     }).sort((a, b) => {
-        return b[`urgence${type}`] - a[`urgence${type}`];
+        return b[type] - a[type];
     }).slice(0, 5);}
 
 
 
     return (
         <div id='caseAlerte'>
-            <CaseAlerteType type="Tir" array={urgence('Tir')}/>
-            <CaseAlerteType type="Tis" array={urgence('Tis')}/>
+            <CaseAlerteType type="shootingTrainingDates" array={urgence('shootingUrgency')}/>
+            <CaseAlerteType type="tisTrainingDates" array={urgence('tisUrgency')}/>
         </div>
     );
 };
@@ -69,12 +69,12 @@ const CaseAlerteType = ({ type, array }) => {
                          + 
                         (2 - trieDates(
                             agentSurvolé.currentYear.startDate, 
-                            agentSurvolé[`dates${type}`].filter((date) => {return date.stat !== "annulé" && date.stat !== "absence agent"}), 
+                            agentSurvolé[type].filter((date) => {return date.stat !== "annulé" && date.stat !== "absence agent"}), 
                             agentSurvolé.currentYear.endDate).length) 
                             + 
                             ' ' 
                             + 
-                            type + (type === 'Tir' ? 's' : '')
+                            (type === "shootingTrainingDates" ? "Tirs" : "Tis")
                             
                             }</p>
 
@@ -88,7 +88,7 @@ const CaseAlerteType = ({ type, array }) => {
 
     return (
         <div className={`AlerteType`}>
-            <p className='titreAlerte'>Prochain {type} a prevoir : </p>
+            <p className='titreAlerte'>Prochains {(type === 'shootingTrainingDates' ?  'TIRS' : 'TIS')} a prevoir : </p>
             {arrayAffiche} 
             {survol === true ? survolAffichage() : null}
 

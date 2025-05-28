@@ -104,8 +104,8 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
     let id = 0;
     const buttons = [];
     let lastDate =
-      agent && [...agent.shootingTrainingDates, ...agent.datesTis].length > 0
-        ? [...agent.shootingTrainingDates, ...agent.datesTis]
+      agent && [...agent.shootingTrainingDates, ...agent.tisTrainingDates].length > 0
+        ? [...agent.shootingTrainingDates, ...agent.tisTrainingDates]
             .reduce((a, b) => {
               return a.delais() > b.delais() ? a : b;
             })
@@ -146,7 +146,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           buttons.push(
             <ListeDates
               fiche={true}
-              typeDate="datesTis"
+              typeDate="tisTrainingDates"
               date={date}
               annéeCouranteFiche={date}
               indexAgent={indexAgent}

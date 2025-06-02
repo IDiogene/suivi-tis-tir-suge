@@ -14,18 +14,18 @@ class Agent {
     this.surname = surname;
     this.weaponPermitDate = {
       startDate: weaponPermitDate,
-      endDate: this.recupDateFinPDA(weaponPermitDate),
+      endDate: this.getEndPermitDate(weaponPermitDate),
     };
     this.permitAnniversaryDates = this.createWeaponPermitAnniversaryDate
 ();
     this.currentYear = this.getCurrentYear();
     this.shootingTrainingDates = shootingDates;
     this.tisTrainingDates = tisDates;
-    this.shootingUrgency  = this.calculUrgence(this.shootingTrainingDates);
-    this.tisUrgency = this.calculUrgence(this.tisTrainingDates);
+    this.shootingUrgency  = this.getUrgencyLevel(this.shootingTrainingDates);
+    this.tisUrgency = this.getUrgencyLevel(this.tisTrainingDates);
   }
 
-  recupDateFinPDA(weaponPermitDate) {
+  getEndPermitDate(weaponPermitDate) {
     let endDate = new datesP(
       weaponPermitDate.jour,
       weaponPermitDate.mois,
@@ -48,107 +48,107 @@ class Agent {
   createWeaponPermitAnniversaryDate() {
     return {
       n6: {
-        debut: this.calculDateAnniversaire(0, 0, 5),
-        fin: new datesP(1, 1, 999999),
+        start: this.calculDateAnniversaire(0, 0, 5),
+        end: new datesP(1, 1, 999999),
       },
       n5: {
-        debut: this.calculDateAnniversaire(0, 0, 4),
-        fin: this.calculDateAnniversaire(-1, 0, 5),
+        start: this.calculDateAnniversaire(0, 0, 4),
+        end: this.calculDateAnniversaire(-1, 0, 5),
       },
       n4: {
-        debut: this.calculDateAnniversaire(0, 0, 3),
-        fin: this.calculDateAnniversaire(-1, 0, 4),
+        start: this.calculDateAnniversaire(0, 0, 3),
+        end: this.calculDateAnniversaire(-1, 0, 4),
       },
       n3: {
-        debut: this.calculDateAnniversaire(0, 0, 2),
-        fin: this.calculDateAnniversaire(-1, 0, 3),
+        start: this.calculDateAnniversaire(0, 0, 2),
+        end: this.calculDateAnniversaire(-1, 0, 3),
       },
       n2: {
-        debut: this.calculDateAnniversaire(0, 0, 1),
-        fin: this.calculDateAnniversaire(-1, 0, 2),
+        start: this.calculDateAnniversaire(0, 0, 1),
+        end: this.calculDateAnniversaire(-1, 0, 2),
       },
       n1: {
-        debut: this.calculDateAnniversaire(0, 0, 0),
-        fin: this.calculDateAnniversaire(-1, 0, 1),
+        start: this.calculDateAnniversaire(0, 0, 0),
+        end: this.calculDateAnniversaire(-1, 0, 1),
       },
     };
   }
 
   getCurrentYear() {
     const dates = this.permitAnniversaryDates;
-    let dFin = null;
+    let endDate = null;
 
     {
       for (let testDate in dates) {
         if (
           dateEntreDeux(
-            dates[testDate].debut,
+            dates[testDate].start,
             dateAujourdhui,
-            dates[testDate].fin
+            dates[testDate].end
           )
         ) {
-          dFin = new datesP(
-            dates[testDate].fin.jour,
-            dates[testDate].fin.mois,
-            dates[testDate].fin.annee
+          endDate = new datesP(
+            dates[testDate].end.jour,
+            dates[testDate].end.mois,
+            dates[testDate].end.annee
           );
           return {
-            startDate: dates[testDate].debut,
-            endDate: dFin,
+            startDate: dates[testDate].start,
+            endDate: endDate,
             string: (
               <div>
-                {dates[testDate].debut.afficherDate()} <br /> II <br />{" "}
-                {dFin.afficherDate()}
+                {dates[testDate].start.afficherDate()} <br /> II <br />{" "}
+                {endDate.afficherDate()}
               </div>
             ),
-            finDans: tempsAvant(dateAujourdhui, dFin),
+            finDans: tempsAvant(dateAujourdhui, endDate),
           };
         }
       }
 
-      if (dFin === null) {
+      if (endDate === null) {
         {
-          dFin = new datesP(
-            dates.n5.fin.jour,
-            dates.n5.fin.mois,
-            dates.n5.fin.annee
+          endDate = new datesP(
+            dates.n5.end.jour,
+            dates.n5.end.mois,
+            dates.n5.end.annee
           );
 
           return {
-            startDate: dates.n5.debut,
-            endDate: dFin,
+            startDate: dates.n5.start,
+            endDate: endDate,
             string: (
               <div>
-                {dates.n5.debut.afficherDate()} <br /> II <br />{" "}
-                {dFin.afficherDate()}
+                {dates.n5.start.afficherDate()} <br /> II <br />{" "}
+                {endDate.afficherDate()}
               </div>
             ),
-            finDans: tempsAvant(dateAujourdhui, dFin),
+            finDans: tempsAvant(dateAujourdhui, endDate),
           };
         }
       }
     }
   }
 
-  calculUrgence(dates) {
+  getUrgencyLevel(dates) {
     let consideringDates = dates.filter(
       (date) => date.stat !== "annulé" && date.stat !== "absence agent"
     );
     let facteurDate = 0;
     if (this.currentYear) {
       // Calculer le nombre de dates dans la plage spécifiée
-      const nombreDates = trieDates(
+      const numberOfDate = trieDates(
         this.currentYear.startDate,
         consideringDates,
         this.currentYear.endDate
       ).length;
 
       // Définir la valeur de "facteurDate" en fonction du nombre de dates
-      if (nombreDates === 0) {
+      if (numberOfDate === 0) {
         facteurDate = 0;
-      } else if (nombreDates === 1 && this.currentYear.finDans > 60) {
+      } else if (numberOfDate === 1 && this.currentYear.finDans > 60) {
         facteurDate = 90;
-      } else if (nombreDates >= 2) {
+      } else if (numberOfDate >= 2) {
         facteurDate = 1000;
       } else {
         facteurDate = 0;

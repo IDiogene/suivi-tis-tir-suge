@@ -115,17 +115,17 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
     if (agent) {
       for (const key in agent.permitAnniversaryDates) {
         const date = agent.permitAnniversaryDates[key];
-        if (date.debut.delais() < lastDate) {
+        if (date.start.delais() < lastDate) {
           buttons.push(
             <ButtonTypeBase
-              key={`${date.debut.afficherDate()}-${id}`}
+              key={`${date.start.afficherDate()}-${id}`}
               className="année"
               content={
-                date.debut.delais() > 0 ? (
+                date.start.delais() > 0 ? (
                   <>dates postérieurs</>
                 ) : (
                   <>
-                    {date.debut.afficherDate()} <br /> {date.fin.afficherDate()}
+                    {date.start.afficherDate()} <br /> {date.end.afficherDate()}
                   </>
                 )
               }

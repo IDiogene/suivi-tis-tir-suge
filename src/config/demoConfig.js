@@ -8,8 +8,8 @@ const rdmNbr = (min, max) => {
 };
 
 const rdmDate = () => {
-  let jour = rdmNbr(1, 31);
-  let mois = rdmNbr(1, 12);
+  let day = rdmNbr(1, 31);
+  let month = rdmNbr(1, 12);
   let annee = rdmNbr(2023, dateAujourdhui.annee);
 
   let statut;
@@ -22,7 +22,7 @@ const rdmDate = () => {
     statut = "annulé";
   }
 
-  return new datesP(jour, mois, annee, statut);
+  return new datesP(day, month, annee, statut);
 };
 
 

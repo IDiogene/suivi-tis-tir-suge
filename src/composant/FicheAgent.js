@@ -26,8 +26,8 @@ const FicheAgent = () => {
     surname: agent ? { ...agent.surname } : null,
     weaponPermitDate: agent
       ? {
-          jour: agent.weaponPermitDate.startDate.jour,
-          mois: agent.weaponPermitDate.startDate.mois,
+          day: agent.weaponPermitDate.startDate.day,
+          month: agent.weaponPermitDate.startDate.month,
           annee: agent.weaponPermitDate.startDate.annee,
         }
       : null,
@@ -56,8 +56,8 @@ const FicheAgent = () => {
       surname: agent ? agent.surname : null,
       weaponPermitDate: agent
         ? {
-            jour: agent.weaponPermitDate.startDate.jour,
-            mois: agent.weaponPermitDate.startDate.mois,
+            day: agent.weaponPermitDate.startDate.day,
+            month: agent.weaponPermitDate.startDate.month,
             annee: agent.weaponPermitDate.startDate.annee,
           }
         : null,
@@ -80,8 +80,8 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           agentModifié.name,
           agentModifié.surname,
           new datesP(
-            agentModifié.weaponPermitDate.jour,
-            agentModifié.weaponPermitDate.mois,
+            agentModifié.weaponPermitDate.day,
+            agentModifié.weaponPermitDate.month,
             agentModifié.weaponPermitDate.annee
           ),
           agentListing[indexAgent].shootingTrainingDates,
@@ -305,21 +305,21 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
           <input
             type="date"
             defaultValue={`${content.startDate.annee}-${
-              content.startDate.mois < 10
-                ? "0" + content.startDate.mois
-                : content.startDate.mois
+              content.startDate.month < 10
+                ? "0" + content.startDate.month
+                : content.startDate.month
             }-${
-              content.startDate.jour < 10
-                ? "0" + content.startDate.jour
-                : content.startDate.jour
+              content.startDate.day < 10
+                ? "0" + content.startDate.day
+                : content.startDate.day
             }`}
             className="inputTxtFiche"
             onBlur={(e) =>
               setterAgent((prev) => ({
                 ...prev,
                 [value]: {
-                  jour: Number(e.target.value.split("-")[2]),
-                  mois: Number(e.target.value.split("-")[1]),
+                  day: Number(e.target.value.split("-")[2]),
+                  month: Number(e.target.value.split("-")[1]),
                   annee: Number(e.target.value.split("-")[0]),
                 },
               }))

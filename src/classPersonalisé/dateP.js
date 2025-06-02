@@ -6,20 +6,20 @@ import {
 } from "../function/logique";
 
 class datesP {
-  constructor(jour, mois, annee, stat = "en attente", comment = "") {
-    this.jour = jour;
-    this.mois = mois;
+  constructor(day, month, annee, stat = "en attente", comment = "") {
+    this.day = day;
+    this.month = month;
     this.annee = annee;
     this.stat = stat;
     this.comment = comment;
   }
   afficherDate() {
-    return `${this.jour < 10 ? "0" + this.jour : this.jour} / ${
-      this.mois < 10 ? "0" + this.mois : this.mois
+    return `${this.day < 10 ? "0" + this.day : this.day} / ${
+      this.month < 10 ? "0" + this.month : this.month
     } / ${this.annee}`;
   }
   afficherDateFormat1() {
-    return `${this.jour} ${moisEnLettre(this.mois)} ${this.annee}`;
+    return `${this.day} ${moisEnLettre(this.month)} ${this.annee}`;
   }
   delais() {
     let delais = tempsAvant(dateAujourdhui, this);

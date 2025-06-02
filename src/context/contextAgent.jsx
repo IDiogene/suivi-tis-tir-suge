@@ -62,12 +62,12 @@ export const AgentProvider = ({ children }) => {
             agentData.name || agentData.nom,
             agentData.surname || agentData.prenom,
             new datesP(
-              agentData.weaponPermitDate?.startDate?.jour || agentData.dateDePortArme?.dateDebut?.jour,
-              agentData.weaponPermitDate?.startDate?.mois || agentData.dateDePortArme?.dateDebut?.mois,
+              agentData.weaponPermitDate?.startDate?.day || agentData.dateDePortArme?.dateDebut?.jour,
+              agentData.weaponPermitDate?.startDate?.month || agentData.dateDePortArme?.dateDebut?.mois,
               agentData.weaponPermitDate?.startDate?.annee || agentData.dateDePortArme?.dateDebut?.annee
             ),
-            agentData.shootingTrainingDates?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)), 
-            agentData.tisTrainingDates?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment))
+            agentData.shootingTrainingDates?.map((date) => new datesP(date.day || date.day , date.month || date.month , date.year || date.annee , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)), 
+            agentData.tisTrainingDates?.map((date) => new datesP(date.day || date.day , date.month || date.month , date.year || date.annee , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment))
           );
         });
         setAgentListing(agents);
@@ -79,12 +79,12 @@ export const AgentProvider = ({ children }) => {
             agentData.name,
             agentData.surname,
             new datesP(
-              agentData.weaponPermitDate.startDate.jour,
-              agentData.weaponPermitDate.startDate.mois,
+              agentData.weaponPermitDate.startDate.day,
+              agentData.weaponPermitDate.startDate.month,
               agentData.weaponPermitDate.startDate.annee,
             ),
-            agentData.shootingTrainingDates.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
-            agentData.tisTrainingDates.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))
+            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.annee, date.stat, date.comment)),
+            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.annee, date.stat, date.comment))
           );
         });
         setAgentListing(agents);

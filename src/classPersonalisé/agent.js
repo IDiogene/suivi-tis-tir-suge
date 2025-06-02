@@ -27,21 +27,21 @@ class Agent {
 
   getEndPermitDate(weaponPermitDate) {
     let endDate = new datesP(
-      weaponPermitDate.jour,
-      weaponPermitDate.mois,
+      weaponPermitDate.day,
+      weaponPermitDate.month,
       weaponPermitDate.annee
     );
     addDate(endDate, -1, 0, 5);
     return endDate;
   }
 
-  calculDateAnniversaire(jour, mois, année) {
+  calculDateAnniversaire(day, month, année) {
     let date = new datesP(
-      this.weaponPermitDate.startDate.jour,
-      this.weaponPermitDate.startDate.mois,
+      this.weaponPermitDate.startDate.day,
+      this.weaponPermitDate.startDate.month,
       this.weaponPermitDate.startDate.annee
     );
-    addDate(date, jour, mois, année);
+    addDate(date, day, month, année);
     return date;
   }
 
@@ -88,8 +88,8 @@ class Agent {
           )
         ) {
           endDate = new datesP(
-            dates[testDate].end.jour,
-            dates[testDate].end.mois,
+            dates[testDate].end.day,
+            dates[testDate].end.month,
             dates[testDate].end.annee
           );
           return {
@@ -109,8 +109,8 @@ class Agent {
       if (endDate === null) {
         {
           endDate = new datesP(
-            dates.n5.end.jour,
-            dates.n5.end.mois,
+            dates.n5.end.day,
+            dates.n5.end.month,
             dates.n5.end.annee
           );
 

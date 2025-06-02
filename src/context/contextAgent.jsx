@@ -54,7 +54,7 @@ export const AgentProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await charger();
-      if (data.length > 0) {
+      if (data && data.length > 0) {
         console.log("Données chargées :", data);
         const agents = data.map((agentData) => {
           return new Agent(

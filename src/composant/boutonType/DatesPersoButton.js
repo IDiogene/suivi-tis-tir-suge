@@ -24,7 +24,7 @@ const DatesPersoButton = (props) => {
         : new datesP(
             dateAujourdhui.day,
             dateAujourdhui.month,
-            dateAujourdhui.annee,
+            dateAujourdhui.year,
             "en attente",
             "date attribuée"
           )
@@ -40,11 +40,11 @@ const DatesPersoButton = (props) => {
   */
   const [dateAttribution, setDateAttribution] = useState(
     !newDate && date
-      ? new datesP(date.day, date.month, date.annee, date.stat, date.comment)
+      ? new datesP(date.day, date.month, date.year, date.stat, date.comment)
       : new datesP(
           dateAujourdhui.day,
           dateAujourdhui.month,
-          dateAujourdhui.annee
+          dateAujourdhui.year
         )
   );
   
@@ -65,7 +65,7 @@ const DatesPersoButton = (props) => {
           : new datesP(
               dateAujourdhui.day,
               dateAujourdhui.month,
-              dateAujourdhui.annee,
+              dateAujourdhui.year,
               "en attente",
               "date attribuée"
             )
@@ -89,7 +89,7 @@ const DatesPersoButton = (props) => {
         ...prev,
         day: Number(e.target.value.split("-")[2]),
         month: Number(e.target.value.split("-")[1]),
-        annee: Number(e.target.value.split("-")[0]),
+        year: Number(e.target.value.split("-")[0]),
       }));
     },
     statut: (e) => {
@@ -104,7 +104,7 @@ const DatesPersoButton = (props) => {
   useEffect(() => {
     const valideDay = () => {
     if (dateAttribution.month === 2) {
-      return (dateAttribution.annee % 4 === 0 && (dateAttribution.annee % 100 !== 0 || dateAttribution.annee % 400 === 0)) ? 29 : 28; // Année bissextile
+      return (dateAttribution.year % 4 === 0 && (dateAttribution.year % 100 !== 0 || dateAttribution.year % 400 === 0)) ? 29 : 28; // Année bissextile
     }
     return [4, 6, 9, 11].includes(dateAttribution.month) ? 30 : 31; // Mois avec 30 ou 31 jours
   }
@@ -126,7 +126,7 @@ const DatesPersoButton = (props) => {
             return new datesP(
               dateAttribution.day,
               dateAttribution.month,
-              dateAttribution.annee,
+              dateAttribution.year,
               dateAttribution.stat,
               dateAttribution.comment
             );
@@ -134,7 +134,7 @@ const DatesPersoButton = (props) => {
             return new datesP(
               date.day,
               date.month,
-              date.annee,
+              date.year,
               date.stat,
               date.comment
             );
@@ -156,7 +156,7 @@ const DatesPersoButton = (props) => {
           new datesP(
             dateAttribution.day,
             dateAttribution.month,
-            dateAttribution.annee,
+            dateAttribution.year,
             dateAttribution.stat,
             dateAttribution.comment
           )
@@ -164,8 +164,8 @@ const DatesPersoButton = (props) => {
       }
 
       newDateListe.sort((a, b) => {
-        if (a.annee !== b.annee) {
-          return a.annee - b.annee;
+        if (a.year !== b.year) {
+          return a.year - b.year;
         } else if (a.month !== b.month) {
           return a.month - b.month;
         } else {
@@ -184,7 +184,7 @@ const DatesPersoButton = (props) => {
         new datesP(
           newAgentListing[indexAgent].weaponPermitDate.startDate.day,
           newAgentListing[indexAgent].weaponPermitDate.startDate.month,
-          newAgentListing[indexAgent].weaponPermitDate.startDate.annee
+          newAgentListing[indexAgent].weaponPermitDate.startDate.year
         ),
         newDateListe(typeDate, "shootingTrainingDates"),
         newDateListe(typeDate, "tisTrainingDates")
@@ -264,7 +264,7 @@ const DatesPersoButton = (props) => {
         className="dateInput"
         onInput={editDateTempo.date}
         onBlur={editDateTempo.date}
-        defaultValue={`${date.annee}-${
+        defaultValue={`${date.year}-${
           date.month < 10 ? "0" + date.month : date.month
         }-${date.day < 10 ? "0" + date.day : date.day}`}
       />

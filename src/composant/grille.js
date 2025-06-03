@@ -247,7 +247,7 @@ const BoutonAddAgent = (props) => {
   // fonction pour verifier si les champs sont remplis et si la date est valide
   useEffect(() => {
     if (newAgent.dpd && newAgent.name && newAgent.surname) {
-      if ( newAgent.dpd.day && newAgent.dpd.month && newAgent.dpd.annee ) {
+      if ( newAgent.dpd.day && newAgent.dpd.month && newAgent.dpd.year ) {
         setNewAgentValide(true);
         setDateValide(true);
       } else {
@@ -258,7 +258,7 @@ const BoutonAddAgent = (props) => {
 
     const valideDay = () => {
     if (newAgent.dpd.month === 2) {
-      return (newAgent.dpd.annee % 4 === 0 && (newAgent.dpd.annee % 100 !== 0 || newAgent.dpd.annee % 400 === 0)) ? 29 : 28; // Année bissextile
+      return (newAgent.dpd.year % 4 === 0 && (newAgent.dpd.year % 100 !== 0 || newAgent.dpd.year % 400 === 0)) ? 29 : 28; // Année bissextile
     }
     return [4, 6, 9, 11].includes(newAgent.dpd.month) ? 30 : 31; // Mois avec 30 ou 31 jours
   }
@@ -309,7 +309,7 @@ const BoutonAddAgent = (props) => {
             new datesP(
               newAgent.dpd.day,
               newAgent.dpd.month,
-              newAgent.dpd.annee,
+              newAgent.dpd.year,
               false,
               false
             )

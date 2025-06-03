@@ -11,12 +11,12 @@ const dateEnCour = {
   month () {
     return this.date.getMonth() + 1;
   },
-  annee () {
+  year () {
     return this.date.getFullYear();
   },
 }
 
-let dateAujourdhui = new datesP(dateEnCour.day(), dateEnCour.month(), dateEnCour.annee());
+let dateAujourdhui = new datesP(dateEnCour.day(), dateEnCour.month(), dateEnCour.year());
 
 
 /// convertir un mois en lettre
@@ -40,9 +40,9 @@ const moisEnLettre = (month) => {
 
 // verifier si une date est entre deux dates
 const dateEntreDeux = (dateMin, dateComparee, dateMax) => {
-  let dateMinVal = dateMin.annee * 1000 + dateMin.month * 40 + dateMin.day;
-  let dateMaxVal = dateMax.annee * 1000 + dateMax.month * 40 + dateMax.day;
-  let dateCompareeVal = dateComparee.annee * 1000 + dateComparee.month * 40 + dateComparee.day;
+  let dateMinVal = dateMin.year * 1000 + dateMin.month * 40 + dateMin.day;
+  let dateMaxVal = dateMax.year * 1000 + dateMax.month * 40 + dateMax.day;
+  let dateCompareeVal = dateComparee.year * 1000 + dateComparee.month * 40 + dateComparee.day;
   if (dateMinVal <= dateCompareeVal && dateCompareeVal < dateMaxVal) {
     return true;
   } else {
@@ -72,8 +72,8 @@ const trieDates = (startDate, liste, endDate) => {
 // calcule le delais avant une date (en int, pour exprimer le nombre de jours)
 const tempsAvant = (date1, date2) => {
   // Crée des class Date standard pour les deux dates pour effectuer le calcul
-  const d1 = new Date(date1.annee, date1.month - 1, date1.day); 
-  const d2 = new Date(date2.annee, date2.month - 1, date2.day);
+  const d1 = new Date(date1.year, date1.month - 1, date1.day); 
+  const d2 = new Date(date2.year, date2.month - 1, date2.day);
   
   // Calcule la différence en millisecondes
   const diffTemps = d2 - d1;
@@ -95,8 +95,8 @@ const tempsAvantString = (date1, date2) => {
   addDate(dateDelais, joursRestants, 0, 0);
   let textes = '';
   switch (true) { 
-      case dateDelais.annee > 0:
-          textes = `reste ${dateDelais.annee} ans, ${dateDelais.month} mois et ${dateDelais.day} jours`;
+      case dateDelais.year > 0:
+          textes = `reste ${dateDelais.year} ans, ${dateDelais.month} mois et ${dateDelais.day} jours`;
           break;
       case dateDelais.month > 0:
           textes = `reste ${dateDelais.month} mois et ${dateDelais.day} jours`;
@@ -114,11 +114,11 @@ const tempsAvantString = (date1, date2) => {
 
 
 // addiion (soustraction) de date
-const addDate = (date, day, month, annee, copie = false) => {
+const addDate = (date, day, month, year, copie = false) => {
   let newDate = (copie) ? [...date] : date; 
   newDate.day += day;
   newDate.month += month;
-  newDate.annee += annee;
+  newDate.year += year;
 
   const daysInMonth = (month, year) => {
     if (month === 2) {
@@ -128,20 +128,20 @@ const addDate = (date, day, month, annee, copie = false) => {
   };
 
   while (true) {
-    const maxDays = daysInMonth(newDate.month, newDate.annee);
+    const maxDays = daysInMonth(newDate.month, newDate.year);
 
     if (newDate.day > maxDays) {
       newDate.day -= maxDays;
       newDate.month += 1;
     } else if (newDate.day < 1 && newDate.month > 1) {
       newDate.month -= 1;
-      newDate.day += daysInMonth(newDate.month, newDate.annee);
+      newDate.day += daysInMonth(newDate.month, newDate.year);
     } else if (newDate.month > 12) {
       newDate.month -= 12;
-      newDate.annee += 1;
-    } else if (newDate.month < 1 && newDate.annee > 0) {
+      newDate.year += 1;
+    } else if (newDate.month < 1 && newDate.year > 0) {
       newDate.month += 12;
-      newDate.annee -= 1;
+      newDate.year -= 1;
     } else {
       break;
     }

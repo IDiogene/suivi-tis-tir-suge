@@ -28,7 +28,7 @@ const FicheAgent = () => {
       ? {
           day: agent.weaponPermitDate.startDate.day,
           month: agent.weaponPermitDate.startDate.month,
-          annee: agent.weaponPermitDate.startDate.annee,
+          year: agent.weaponPermitDate.startDate.year,
         }
       : null,
   });
@@ -58,7 +58,7 @@ const FicheAgent = () => {
         ? {
             day: agent.weaponPermitDate.startDate.day,
             month: agent.weaponPermitDate.startDate.month,
-            annee: agent.weaponPermitDate.startDate.annee,
+            year: agent.weaponPermitDate.startDate.year,
           }
         : null,
     });
@@ -82,7 +82,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
           new datesP(
             agentModifié.weaponPermitDate.day,
             agentModifié.weaponPermitDate.month,
-            agentModifié.weaponPermitDate.annee
+            agentModifié.weaponPermitDate.year
           ),
           agentListing[indexAgent].shootingTrainingDates,
           agentListing[indexAgent].shootingTrainingDates
@@ -304,7 +304,7 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
         ) : modif && type === "date" ? (
           <input
             type="date"
-            defaultValue={`${content.startDate.annee}-${
+            defaultValue={`${content.startDate.year}-${
               content.startDate.month < 10
                 ? "0" + content.startDate.month
                 : content.startDate.month
@@ -320,7 +320,7 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
                 [value]: {
                   day: Number(e.target.value.split("-")[2]),
                   month: Number(e.target.value.split("-")[1]),
-                  annee: Number(e.target.value.split("-")[0]),
+                  year: Number(e.target.value.split("-")[0]),
                 },
               }))
             }

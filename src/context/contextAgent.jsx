@@ -64,10 +64,10 @@ export const AgentProvider = ({ children }) => {
             new datesP(
               agentData.weaponPermitDate?.startDate?.day || agentData.dateDePortArme?.dateDebut?.jour,
               agentData.weaponPermitDate?.startDate?.month || agentData.dateDePortArme?.dateDebut?.mois,
-              agentData.weaponPermitDate?.startDate?.annee || agentData.dateDePortArme?.dateDebut?.annee
+              agentData.weaponPermitDate?.startDate?.year || agentData.dateDePortArme?.dateDebut?.year
             ),
-            agentData.shootingTrainingDates?.map((date) => new datesP(date.day || date.day , date.month || date.month , date.year || date.annee , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment)), 
-            agentData.tisTrainingDates?.map((date) => new datesP(date.day || date.day , date.month || date.month , date.year || date.annee , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.day || date.jour , date.month || date.mois , date.year || date.annee , date.stat, date.comment))
+            agentData.shootingTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.jour , date.mois , date.annee , date.stat, date.comment)), 
+            agentData.tisTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.jour ,  date.mois , date.annee , date.stat, date.comment))
           );
         });
         setAgentListing(agents);
@@ -81,10 +81,10 @@ export const AgentProvider = ({ children }) => {
             new datesP(
               agentData.weaponPermitDate.startDate.day,
               agentData.weaponPermitDate.startDate.month,
-              agentData.weaponPermitDate.startDate.annee,
+              agentData.weaponPermitDate.startDate.year,
             ),
-            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.annee, date.stat, date.comment)),
-            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.annee, date.stat, date.comment))
+            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
+            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment))
           );
         });
         setAgentListing(agents);

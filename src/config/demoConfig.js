@@ -10,7 +10,7 @@ const rdmNbr = (min, max) => {
 const rdmDate = () => {
   let day = rdmNbr(1, 31);
   let month = rdmNbr(1, 12);
-  let annee = rdmNbr(2023, dateAujourdhui.annee);
+  let year = rdmNbr(2023, dateAujourdhui.year);
 
   let statut;
   let rand = Math.random();
@@ -22,7 +22,7 @@ const rdmDate = () => {
     statut = "annulé";
   }
 
-  return new datesP(day, month, annee, statut);
+  return new datesP(day, month, year, statut);
 };
 
 

@@ -29,7 +29,7 @@ class Agent {
     let endDate = new datesP(
       weaponPermitDate.day,
       weaponPermitDate.month,
-      weaponPermitDate.annee
+      weaponPermitDate.year
     );
     addDate(endDate, -1, 0, 5);
     return endDate;
@@ -39,7 +39,7 @@ class Agent {
     let date = new datesP(
       this.weaponPermitDate.startDate.day,
       this.weaponPermitDate.startDate.month,
-      this.weaponPermitDate.startDate.annee
+      this.weaponPermitDate.startDate.year
     );
     addDate(date, day, month, année);
     return date;
@@ -90,7 +90,7 @@ class Agent {
           endDate = new datesP(
             dates[testDate].end.day,
             dates[testDate].end.month,
-            dates[testDate].end.annee
+            dates[testDate].end.year
           );
           return {
             startDate: dates[testDate].start,
@@ -111,7 +111,7 @@ class Agent {
           endDate = new datesP(
             dates.n5.end.day,
             dates.n5.end.month,
-            dates.n5.end.annee
+            dates.n5.end.year
           );
 
           return {

@@ -41,7 +41,7 @@ const charger = async () => {
 
 export const AgentProvider = ({ children }) => {
     const [agentListing, setAgentListing] = useState([]); // la liste des agents
-    const [agentSelectionné, setAgentSelectionné] = useState(null); // agent sélectionné, nécassaire pour la fiche agent
+    const [selectedAgent, setSelectedAgent] = useState(null); // agent sélectionné, nécassaire pour la fiche agent
     const [dataCharged, setDataCharged] = useState(false); // assure le chargement initial des données dans de permettre la sauvegarde
 
  
@@ -97,7 +97,7 @@ export const AgentProvider = ({ children }) => {
   
     
 return (
-    <agentContext.Provider value={{ agentListing, setAgentListing, agentSelectionné, setAgentSelectionné }}>
+    <agentContext.Provider value={{ agentListing, setAgentListing, selectedAgent, setSelectedAgent }}>
       {children}
     </agentContext.Provider>
   );

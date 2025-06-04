@@ -11,14 +11,14 @@ const FicheAgent = () => {
   const {
     agentListing,
     setAgentListing,
-    agentSelectionné,
-    setAgentSelectionné,
+    selectedAgent,
+    setSelectedAgent,
   } = useContext(agentContext);
   const [agent, setAgent] = useState(
-    agentSelectionné ? agentSelectionné.agent : null
+    selectedAgent ? selectedAgent.agent : null
   );
   const [indexAgent, setIndexAgent] = useState(
-    agentSelectionné ? agentSelectionné.index : null
+    selectedAgent ? selectedAgent.index : null
   );
   const [modifier, setModifier] = useState(false);
   const [agentModifié, setAgentModifié] = useState({
@@ -34,20 +34,20 @@ const FicheAgent = () => {
   });
 
   useEffect(() => {
-    setAgentSelectionné({
+    setSelectedAgent({
       agent: agentListing[indexAgent],
       index: indexAgent,
     });
   }, [agentListing]);
 
   useEffect(() => {
-    setAgent(agentSelectionné ? agentSelectionné.agent : null);
-  }, [agentSelectionné]);
+    setAgent(selectedAgent ? selectedAgent.agent : null);
+  }, [selectedAgent]);
 
   useEffect(() => {
-    setAgent(agentSelectionné ? agentSelectionné.agent : null);
-    setIndexAgent(agentSelectionné ? agentSelectionné.index : null);
-  }, [agentSelectionné]);
+    setAgent(selectedAgent ? selectedAgent.agent : null);
+    setIndexAgent(selectedAgent ? selectedAgent.index : null);
+  }, [selectedAgent]);
 
   // enregistre des données temporaire modifier un agent, en lien avec 'boutonModif'
   useEffect(() => {
@@ -167,7 +167,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
   return (
     <div className="fiche" id="fiche">
       {" "}
-      {agentSelectionné ? (
+      {selectedAgent ? (
         <>
           <BoutonModifier click={click} modif={modifier} />
           <BoutonFermeFiche click={click} />
@@ -226,10 +226,10 @@ agents qui ne sont utilisés que par cette dernière
 
 // bouton pour fermer la fiche agent
 const BoutonFermeFiche = ({ click }) => {
-  const { agentSelectionné, setAgentSelectionné } = useContext(agentContext);
+  const { selectedAgent, setSelectedAgent } = useContext(agentContext);
   const fermeFiche = () => {
     click(false, false);
-    setAgentSelectionné(null);
+    setSelectedAgent(null);
     let fiche = document.getElementById("fiche");
     fiche.style.left = "100%";
   };
@@ -270,24 +270,24 @@ const BoutonModifier = ({ click, modif }) => {
 
 // bouton pour modifier nom et prenom (le gros de la logique est contenu dans la fiche)
 const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
-  const { agentSelectionné } = useContext(agentContext);
+  const { selectedAgent } = useContext(agentContext);
   const [agent, setAgent] = useState(
-    agentSelectionné ? agentSelectionné.agent : null
+    selectedAgent ? selectedAgent.agent : null
   );
   const [content, setContent] = useState(agent ? agent[value] : null);
 
   useEffect(() => {
-    setAgent(agentSelectionné ? agentSelectionné.agent : null);
-  }, [agentSelectionné]);
+    setAgent(selectedAgent ? selectedAgent.agent : null);
+  }, [selectedAgent]);
 
   useEffect(() => {
     setContent(agent ? agent[value] : null);
   }, [agent]);
 
   useEffect(() => {
-    setAgent(agentSelectionné ? agentSelectionné.agent : null);
+    setAgent(selectedAgent ? selectedAgent.agent : null);
     setContent(agent ? agent[value] : null);
-  }, [agentSelectionné]);
+  }, [selectedAgent]);
 
   return (
     <>
@@ -350,16 +350,16 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
 
 // bouton pour supprimer un agent (contient la logique)
 const BoutonSupression = (props) => {
-  const { agentSelectionné, setAgentSelectionné } = useContext(agentContext);
+  const { selectedAgent, setSelectedAgent } = useContext(agentContext);
   const { agentListing, setAgentListing } = useContext(agentContext);
 
   const supression = () => {
     setAgentListing((prev) => {
       const newListing = [...prev];
-      newListing.splice(agentSelectionné.index, 1);
+      newListing.splice(selectedAgent.index, 1);
       return newListing;
     });
-    setAgentSelectionné(agentListing[0]);
+    setSelectedAgent(agentListing[0]);
     let fiche = document.getElementById("fiche");
     fiche.style.left = "100%";
   };

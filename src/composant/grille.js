@@ -161,7 +161,7 @@ const TitleLine = () => {
 
 // ligne agent
 const AgentLine = (props) => {
-  const { agentListing, agentSelectionné, setAgentSelectionné } =
+  const { agentListing, selectedAgent, setSelectedAgent } =
     useContext(agentContext);
   const [index, setIndex] = useState(props.index);
   const [agent, setAgent] = useState(agentListing[index]);
@@ -177,7 +177,7 @@ const AgentLine = (props) => {
   /// recupérer l'agent selectionné dans la fiche
   const getFiche = () => {
     let fiche = document.getElementById("fiche");
-    setAgentSelectionné({
+    setSelectedAgent({
       agent: agentListing[index],
       index: index,
     });

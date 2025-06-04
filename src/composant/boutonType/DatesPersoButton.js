@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, use } from "react";
 import contextAgent from "../../context/contextAgent";
 import { Agent } from "../../classPersonalisé/agent";
 import datesP from "../../classPersonalisé/dateP";
-import { dateAujourdhui, tempsAvant } from "../../function/logique";
+import { todayDate, timeBefore } from "../../function/logique";
 
 
 /* logique et affichage d'une date 
@@ -22,9 +22,9 @@ const DatesPersoButton = (props) => {
       ? !newDate
         ? agentListing[indexAgent][typeDate][indexDate]
         : new datesP(
-            dateAujourdhui.jour,
-            dateAujourdhui.mois,
-            dateAujourdhui.annee,
+            todayDate.day,
+            todayDate.month,
+            todayDate.year,
             "en attente",
             "date attribuée"
           )
@@ -40,11 +40,11 @@ const DatesPersoButton = (props) => {
   */
   const [dateAttribution, setDateAttribution] = useState(
     !newDate && date
-      ? new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)
+      ? new datesP(date.day, date.month, date.year, date.stat, date.comment)
       : new datesP(
-          dateAujourdhui.jour,
-          dateAujourdhui.mois,
-          dateAujourdhui.annee
+          todayDate.day,
+          todayDate.month,
+          todayDate.year
         )
   );
   
@@ -63,9 +63,9 @@ const DatesPersoButton = (props) => {
         ? !newDate
           ? agentListing[indexAgent][typeDate][indexDate]
           : new datesP(
-              dateAujourdhui.jour,
-              dateAujourdhui.mois,
-              dateAujourdhui.annee,
+              todayDate.day,
+              todayDate.month,
+              todayDate.year,
               "en attente",
               "date attribuée"
             )
@@ -87,9 +87,9 @@ const DatesPersoButton = (props) => {
     date: (e) => {
       setDateAttribution((prev) => ({
         ...prev,
-        jour: Number(e.target.value.split("-")[2]),
-        mois: Number(e.target.value.split("-")[1]),
-        annee: Number(e.target.value.split("-")[0]),
+        day: Number(e.target.value.split("-")[2]),
+        month: Number(e.target.value.split("-")[1]),
+        year: Number(e.target.value.split("-")[0]),
       }));
     },
     statut: (e) => {
@@ -103,12 +103,12 @@ const DatesPersoButton = (props) => {
   // vérifie si la date est valide
   useEffect(() => {
     const valideDay = () => {
-    if (dateAttribution.mois === 2) {
-      return (dateAttribution.annee % 4 === 0 && (dateAttribution.annee % 100 !== 0 || dateAttribution.annee % 400 === 0)) ? 29 : 28; // Année bissextile
+    if (dateAttribution.month === 2) {
+      return (dateAttribution.year % 4 === 0 && (dateAttribution.year % 100 !== 0 || dateAttribution.year % 400 === 0)) ? 29 : 28; // Année bissextile
     }
-    return [4, 6, 9, 11].includes(dateAttribution.mois) ? 30 : 31; // Mois avec 30 ou 31 jours
+    return [4, 6, 9, 11].includes(dateAttribution.month) ? 30 : 31; // Mois avec 30 ou 31 jours
   }
-    setDateIsValid(dateAttribution.jour <= valideDay())
+    setDateIsValid(dateAttribution.day <= valideDay())
        
   }, [dateAttribution])
 
@@ -124,17 +124,17 @@ const DatesPersoButton = (props) => {
         .map((date, index) => {
           if (index === indexDate && typeModifié === type) {
             return new datesP(
-              dateAttribution.jour,
-              dateAttribution.mois,
-              dateAttribution.annee,
+              dateAttribution.day,
+              dateAttribution.month,
+              dateAttribution.year,
               dateAttribution.stat,
               dateAttribution.comment
             );
           } else {
             return new datesP(
-              date.jour,
-              date.mois,
-              date.annee,
+              date.day,
+              date.month,
+              date.year,
               date.stat,
               date.comment
             );
@@ -154,9 +154,9 @@ const DatesPersoButton = (props) => {
       if (newDate && typeModifié === type) {
         newDateListe.push(
           new datesP(
-            dateAttribution.jour,
-            dateAttribution.mois,
-            dateAttribution.annee,
+            dateAttribution.day,
+            dateAttribution.month,
+            dateAttribution.year,
             dateAttribution.stat,
             dateAttribution.comment
           )
@@ -164,12 +164,12 @@ const DatesPersoButton = (props) => {
       }
 
       newDateListe.sort((a, b) => {
-        if (a.annee !== b.annee) {
-          return a.annee - b.annee;
-        } else if (a.mois !== b.mois) {
-          return a.mois - b.mois;
+        if (a.year !== b.year) {
+          return a.year - b.year;
+        } else if (a.month !== b.month) {
+          return a.month - b.month;
         } else {
-          return a.jour - b.jour;
+          return a.day - b.day;
         }
       });
 
@@ -179,15 +179,15 @@ const DatesPersoButton = (props) => {
     setAgentListing((prev) => {
       let newAgentListing = [...prev];
       const agent = new Agent(
-        newAgentListing[indexAgent].nom,
-        newAgentListing[indexAgent].prenom,
+        newAgentListing[indexAgent].name,
+        newAgentListing[indexAgent].surname,
         new datesP(
-          newAgentListing[indexAgent].dateDePortArme.dateDebut.jour,
-          newAgentListing[indexAgent].dateDePortArme.dateDebut.mois,
-          newAgentListing[indexAgent].dateDePortArme.dateDebut.annee
+          newAgentListing[indexAgent].weaponPermitDate.startDate.day,
+          newAgentListing[indexAgent].weaponPermitDate.startDate.month,
+          newAgentListing[indexAgent].weaponPermitDate.startDate.year
         ),
-        newDateListe(typeDate, "datesTir"),
-        newDateListe(typeDate, "datesTis")
+        newDateListe(typeDate, "shootingTrainingDates"),
+        newDateListe(typeDate, "tisTrainingDates")
       );
       newAgentListing[indexAgent] = agent;
       return newAgentListing;
@@ -224,7 +224,7 @@ const DatesPersoButton = (props) => {
                   case "validé":
                     return "green";
                   case "en attente":
-                    return tempsAvant(dateAujourdhui, date) < 0
+                    return timeBefore(todayDate, date) < 0
                       ? "blue"
                       : "orange";
                   case "annulé":
@@ -264,9 +264,9 @@ const DatesPersoButton = (props) => {
         className="dateInput"
         onInput={editDateTempo.date}
         onBlur={editDateTempo.date}
-        defaultValue={`${date.annee}-${
-          date.mois < 10 ? "0" + date.mois : date.mois
-        }-${date.jour < 10 ? "0" + date.jour : date.jour}`}
+        defaultValue={`${date.year}-${
+          date.month < 10 ? "0" + date.month : date.month
+        }-${date.day < 10 ? "0" + date.day : date.day}`}
       />
 
 
@@ -286,10 +286,10 @@ const DatesPersoButton = (props) => {
           sans quoi elle ne peut être validée, 
           et l'agent ne peut être absent
           */ }
-        {tempsAvant(dateAujourdhui, dateAttribution) <= 0 ? (
+        {timeBefore(todayDate, dateAttribution) <= 0 ? (
           <option value="validé">validé</option>
         ) : null}
-        {tempsAvant(dateAujourdhui, dateAttribution) <= 0 ? (
+        {timeBefore(todayDate, dateAttribution) <= 0 ? (
           <option value="absence agent">absence agent</option>
         ) : null}
 

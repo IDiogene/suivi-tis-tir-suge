@@ -10,17 +10,17 @@ import config from "../config/config";
 
 
 ///// grille
-const Grille = () => {
+const Grid = () => {
   const { agentListing } = useContext(agentContext);
 
   return (
     <div className="grille">
-      <LigneTitre key="titre" />
+      <TitleLine key="titre" />
       <motion.div layout>
         {agentListing.length > 0 ? (
           agentListing.map((element, index) => {
             return (
-              <LigneAgent key={element.nom + element.prenom} index={index} />
+              <AgentLine key={element.name + element.surname} index={index} />
             );
           })
         ) : (
@@ -28,7 +28,7 @@ const Grille = () => {
         )}
       </motion.div>
       <br />
-      <BoutonAddAgent id="addAgent" />
+      <AddAgentButton id="addAgent" />
     </div>
   );
 };
@@ -40,29 +40,29 @@ la grille comprend la liste des agents, mais aussi les titres et le bouton d'ajo
 */
 
 // ligne titre
-const LigneTitre = () => {
+const TitleLine = () => {
   const { agentListing, setAgentListing } = useContext(agentContext);
   const [valChange, setValChange] = useState(false);
   const [trie, setTrie] = useState({
     type: "Nom",
-    ordre: "asc",
+    order: "asc",
   });
 
   const triePrécedent = useRef({
     type: "Nom",
-    ordre: "asc",
+    order: "asc",
   });
 
   useEffect(() => {
     setTrie({
       type: triePrécedent.type,
-      ordre: triePrécedent.ordre,
+      order: triePrécedent.order,
     });
   }, [agentListing]);
 
   const contentTrie = (contentBase) => {
     if (trie.type === contentBase) {
-      if (trie.ordre === "asc") {
+      if (trie.order === "asc") {
         return contentBase + " \u25B2";
       } else {
         return contentBase + " \u25BC";
@@ -74,11 +74,11 @@ const LigneTitre = () => {
 
   const trieAgent = (type) => {
     if (triePrécedent.type === type) {
-      triePrécedent.ordre === "desc"
-        ? (triePrécedent.ordre = "asc")
-        : (triePrécedent.ordre = "desc");
+      triePrécedent.order === "desc"
+        ? (triePrécedent.order = "asc")
+        : (triePrécedent.order = "desc");
     } else {
-      triePrécedent.ordre = "asc";
+      triePrécedent.order = "asc";
       triePrécedent.type = type;
     }
 
@@ -86,41 +86,41 @@ const LigneTitre = () => {
     switch (type) {
       case "Nom":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "asc"
-            ? a.nom.localeCompare(b.nom)
-            : b.nom.localeCompare(a.nom)
+          triePrécedent.order === "asc"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
         );
         break;
       case "Date de port d'arme":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "asc"
-            ? a.dateDePortArme.dateFin.delais() -
-              b.dateDePortArme.dateFin.delais()
-            : b.dateDePortArme.dateFin.delais() -
-              a.dateDePortArme.dateFin.delais()
+          triePrécedent.order === "asc"
+            ? a.weaponPermitDate.endDate.delais() -
+              b.weaponPermitDate.endDate.delais()
+            : b.weaponPermitDate.endDate.delais() -
+              a.weaponPermitDate.endDate.delais()
         );
         break;
       case "Année en courrante":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "asc"
-            ? a.anneeCourante.dateFin.delais() -
-              b.anneeCourante.dateFin.delais()
-            : b.anneeCourante.dateFin.delais() -
-              a.anneeCourante.dateFin.delais()
+          triePrécedent.order === "asc"
+            ? a.currentYear.endDate.delais() -
+              b.currentYear.endDate.delais()
+            : b.currentYear.endDate.delais() -
+              a.currentYear.endDate.delais()
         );
         break;
       case "Date des tirs":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "desc"
-            ? a.urgenceTir - b.urgenceTir
-            : b.urgenceTir - a.urgenceTir
+          triePrécedent.order === "desc"
+            ? a.shootingUrgency  - b.shootingUrgency 
+            : b.shootingUrgency  - a.shootingUrgency 
         );
         break;
       case "Date des tis":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "desc"
-            ? a.urgenceTis - b.urgenceTis
-            : b.urgenceTis - a.urgenceTis
+          triePrécedent.order === "desc"
+            ? a.tisUrgency - b.tisUrgency
+            : b.tisUrgency - a.tisUrgency
         );
         break;
     }
@@ -160,8 +160,8 @@ const LigneTitre = () => {
 };
 
 // ligne agent
-const LigneAgent = (props) => {
-  const { agentListing, agentSelectionné, setAgentSelectionné } =
+const AgentLine = (props) => {
+  const { agentListing, selectedAgent, setSelectedAgent } =
     useContext(agentContext);
   const [index, setIndex] = useState(props.index);
   const [agent, setAgent] = useState(agentListing[index]);
@@ -177,7 +177,7 @@ const LigneAgent = (props) => {
   /// recupérer l'agent selectionné dans la fiche
   const getFiche = () => {
     let fiche = document.getElementById("fiche");
-    setAgentSelectionné({
+    setSelectedAgent({
       agent: agentListing[index],
       index: index,
     });
@@ -194,7 +194,7 @@ const LigneAgent = (props) => {
       agent={agent}
       style={{
         backgroundColor: (() => {
-          if (agent.dateDePortArme.dateFin.delais() <= 365) {
+          if (agent.weaponPermitDate.endDate.delais() <= 365) {
             return "rgb(71, 0, 0)";
           }
         })(),
@@ -202,27 +202,27 @@ const LigneAgent = (props) => {
     >
       <ButtonTypeBase
         className="textesListe"
-        content={agent.nom + " " + agent.prenom}
+        content={agent.name + " " + agent.surname}
         id="nomLi"
       />
       <ButtonTypeAlternative
         className="textesListe"
-        content={agent.dateDePortArme.dateFin.delaisFormat1()}
+        content={agent.weaponPermitDate.endDate.delaisFormat1()}
         content2={
-          `${agent.dateDePortArme.dateDebut.afficherDateFormat1()}` +
+          `${agent.weaponPermitDate.startDate.afficherDateFormat1()}` +
           " au " +
-          `${agent.dateDePortArme.dateFin.afficherDateFormat1()}`
+          `${agent.weaponPermitDate.endDate.afficherDateFormat1()}`
         }
         id="dateDePortArmeLi"
       />
       <ButtonTypeAlternative
         className="textesListe"
-        content={agent.anneeCourante.dateFin.delaisFormat1()}
-        content2={agent.anneeCourante.dateFin.afficherDateFormat1()}
+        content={agent.currentYear.endDate.delaisFormat1()}
+        content2={agent.currentYear.endDate.afficherDateFormat1()}
         id="dateDePortArmeLi"
       />
-      <ListeDates indexAgent={index} typeDate="datesTir" />
-      <ListeDates indexAgent={index} typeDate="datesTis" />
+      <ListeDates indexAgent={index} typeDate="shootingTrainingDates" />
+      <ListeDates indexAgent={index} typeDate="tisTrainingDates" />
     </motion.div>
   ) : (
     <div>vide</div>
@@ -230,13 +230,13 @@ const LigneAgent = (props) => {
 };
 
 // bouton d'ajout d'agent
-const BoutonAddAgent = (props) => {
+const AddAgentButton = (props) => {
   const { agentListing, setAgentListing } = useContext(agentContext);
   const [addMode, setAddMod] = useState(false);
 
   const [newAgent, setNewAgent] = useState({
-    nom: null,
-    prenom: null,
+    name: null,
+    surname: null,
     dpd: null,
   });
 
@@ -246,8 +246,8 @@ const BoutonAddAgent = (props) => {
 
   // fonction pour verifier si les champs sont remplis et si la date est valide
   useEffect(() => {
-    if (newAgent.dpd && newAgent.nom && newAgent.prenom) {
-      if ( newAgent.dpd.jour && newAgent.dpd.mois && newAgent.dpd.annee ) {
+    if (newAgent.dpd && newAgent.name && newAgent.surname) {
+      if ( newAgent.dpd.day && newAgent.dpd.month && newAgent.dpd.year ) {
         setNewAgentValide(true);
         setDateValide(true);
       } else {
@@ -257,12 +257,13 @@ const BoutonAddAgent = (props) => {
     setNewAgentValide(false); }
 
     const valideDay = () => {
-    if (newAgent.dpd.mois === 2) {
-      return (newAgent.dpd.annee % 4 === 0 && (newAgent.dpd.annee % 100 !== 0 || newAgent.dpd.annee % 400 === 0)) ? 29 : 28; // Année bissextile
+    if (newAgent.dpd.month === 2) {
+      return (newAgent.dpd.year % 4 === 0 && (newAgent.dpd.year % 100 !== 0 || newAgent.dpd.year % 400 === 0)) ? 29 : 28; // Année bissextile
     }
-    return [4, 6, 9, 11].includes(newAgent.dpd.mois) ? 30 : 31; // Mois avec 30 ou 31 jours
+    return [4, 6, 9, 11].includes(newAgent.dpd.month) ? 30 : 31; // Mois avec 30 ou 31 jours
   }
-    setDateValide(newAgent.dpd ? newAgent.dpd.jour <= valideDay() ? true : false : false);
+    setDateValide(newAgent.dpd ? newAgent.dpd.day <= valideDay() ? true : false : false);
+    console.log(newAgentValide, dateValide, newAgent);
 
     
   }, [newAgent]);
@@ -270,8 +271,8 @@ const BoutonAddAgent = (props) => {
   // remise a zéro des champs de l'agent
   useEffect(() => {
     setNewAgent({
-      nom: "",
-      prenom: "",
+      name: "",
+      surname: "",
       dpd: null,
     })}, [addMode]);
 
@@ -295,20 +296,20 @@ const BoutonAddAgent = (props) => {
   // fonction d'ajout de l'agent en fonction de l'agent temporaire
   const addAgent = () => {
     if (
-      newAgent.nom !== "" ||
-      newAgent.prenom !== "" ||
+      newAgent.name !== "" ||
+      newAgent.surname !== "" ||
       newAgent.dpd !== null
     ) {
       setAgentListing((prev) => {
         let newAgentListing = [...prev];
         newAgentListing.push(
           new Agent(
-            newAgent.nom,
-            newAgent.prenom,
+            newAgent.name,
+            newAgent.surname,
             new datesP(
-              newAgent.dpd.jour,
-              newAgent.dpd.mois,
-              newAgent.dpd.annee,
+              newAgent.dpd.day,
+              newAgent.dpd.month,
+              newAgent.dpd.year,
               false,
               false
             )
@@ -354,16 +355,16 @@ const BoutonAddAgent = (props) => {
             placeholder="nom"
             className="inputAddAgent"
             id="AddAgentImputNom"
-            onBlur={(e) => modifAgent(e.target.value, "nom")}
-            onChange={(e) => modifAgent(e.target.value, "nom")}
+            onBlur={(e) => modifAgent(e.target.value, "name")}
+            onChange={(e) => modifAgent(e.target.value, "name")}
           />
           <input
             type="text"
             placeholder="prenom"
             className="inputAddAgent"
             id="AddAgentImputPrenom"
-            onBlur={(e) => modifAgent(e.target.value, "prenom")}
-            onChange={(e) => modifAgent(e.target.value, "prenom")}
+            onBlur={(e) => modifAgent(e.target.value, "surname")}
+            onChange={(e) => modifAgent(e.target.value, "surname")}
           />
           <p id="txtAddAgent">date port d'arme : </p>
           <input
@@ -414,4 +415,4 @@ const BoutonAddAgent = (props) => {
   );
 };
 
-export { Grille };
+export { Grid };

@@ -13,7 +13,7 @@ const agentContext = createContext()
   fonctionne avec Electron
 */
 // sauvegarde
-const appelElectron = (liste) => {
+const save = (liste) => {
     ipcRenderer.invoke('save', liste)
         .then((result) => {
             //console.log("sauvegarde effectué");
@@ -41,16 +41,17 @@ const charger = async () => {
 
 export const AgentProvider = ({ children }) => {
     const [agentListing, setAgentListing] = useState([]); // la liste des agents
-    const [agentSelectionné, setAgentSelectionné] = useState(null); // agent sélectionné, nécassaire pour la fiche agent
+    const [selectedAgent, setSelectedAgent] = useState(null); // agent sélectionné, nécassaire pour la fiche agent
     const [dataCharged, setDataCharged] = useState(false); // assure le chargement initial des données dans de permettre la sauvegarde
 
  
 
     useEffect(() => {
        if ( dataCharged ) {
-        appelElectron(JSON.parse(JSON.stringify(agentListing)));}
+        save(JSON.parse(JSON.stringify(agentListing)));}
   }, [agentListing]);
 
+  // chargement des données à l'initialisation du provider, double lecture pour refactoring anglais, compatible avec sauvegarde de la version française
   useEffect(() => {
     const fetchData = async () => {
       const data = await charger();
@@ -58,15 +59,15 @@ export const AgentProvider = ({ children }) => {
         console.log("Données chargées :", data);
         const agents = data.map((agentData) => {
           return new Agent(
-            agentData.nom,
-            agentData.prenom,
+            agentData.name || agentData.nom,
+            agentData.surname || agentData.prenom,
             new datesP(
-              agentData.dateDePortArme.dateDebut.jour,
-              agentData.dateDePortArme.dateDebut.mois,
-              agentData.dateDePortArme.dateDebut.annee
+              agentData.weaponPermitDate?.startDate?.day || agentData.dateDePortArme?.dateDebut?.jour,
+              agentData.weaponPermitDate?.startDate?.month || agentData.dateDePortArme?.dateDebut?.mois,
+              agentData.weaponPermitDate?.startDate?.year || agentData.dateDePortArme?.dateDebut?.annee
             ),
-            agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
-            agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))
+            agentData.shootingTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.jour , date.mois , date.annee , date.stat, date.comment)), 
+            agentData.tisTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.jour ,  date.mois , date.annee , date.stat, date.comment))
           );
         });
         setAgentListing(agents);
@@ -75,15 +76,15 @@ export const AgentProvider = ({ children }) => {
         console.log("Données de démonstration utilisées");
         const agents = demoConfig.map((agentData) => {
           return new Agent(
-            agentData.nom,
-            agentData.prenom,
+            agentData.name,
+            agentData.surname,
             new datesP(
-              agentData.dateDePortArme.dateDebut.jour,
-              agentData.dateDePortArme.dateDebut.mois,
-              agentData.dateDePortArme.dateDebut.annee
+              agentData.weaponPermitDate.startDate.day,
+              agentData.weaponPermitDate.startDate.month,
+              agentData.weaponPermitDate.startDate.year,
             ),
-            agentData.datesTir.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment)),
-            agentData.datesTis.map((date) => new datesP(date.jour, date.mois, date.annee, date.stat, date.comment))
+            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
+            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment))
           );
         });
         setAgentListing(agents);
@@ -96,7 +97,7 @@ export const AgentProvider = ({ children }) => {
   
     
 return (
-    <agentContext.Provider value={{ agentListing, setAgentListing, agentSelectionné, setAgentSelectionné }}>
+    <agentContext.Provider value={{ agentListing, setAgentListing, selectedAgent, setSelectedAgent }}>
       {children}
     </agentContext.Provider>
   );

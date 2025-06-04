@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import DatesPersoButton from "../boutonType/DatesPersoButton";
 import agentContext from "../../context/contextAgent";
-import { dateEntreDeux } from "../../function/logique";
+import { dateBetween } from "../../function/logique";
 
 const ListeDates = (props) => {
-  const { agentListing, agentSelectionné } = useContext(agentContext);
+  const { agentListing, selectedAgent } = useContext(agentContext);
   const [index, setIndex] = useState(
-    props.fiche ? agentSelectionné.index : props.indexAgent
+    props.fiche ? selectedAgent.index : props.indexAgent
   );
   const [agent, setAgent] = useState(
-    props.fiche ? agentSelectionné.agent : agentListing[index]
+    props.fiche ? selectedAgent.agent : agentListing[index]
   );
   const [dateFormat, setDateFormat] = useState(
-    props.fiche ? ["debut", "fin"] : ["dateDebut", "dateFin"]
+    props.fiche ? ["start", "end"] : ["startDate", "endDate"]
   );
 
   const [dateListe, setDateListe] = useState(agent[props.typeDate]);
   const [anneeCourante, setAnneeCourante] = useState(
-    props.fiche ? props.annéeCouranteFiche : agent.anneeCourante
+    props.fiche ? props.annéeCouranteFiche : agent.currentYear
   );
   const [delais, setDelais] = useState(anneeCourante[dateFormat[1]].delais());
 
@@ -29,19 +29,19 @@ const ListeDates = (props) => {
   /// initialisation code couleur
 
   useEffect(() => {
-    setIndex(props.fiche ? agentSelectionné.index : props.indexAgent);
-  }, [agentListing, agentSelectionné]);
+    setIndex(props.fiche ? selectedAgent.index : props.indexAgent);
+  }, [agentListing, selectedAgent]);
 
   useEffect(() => {
-    setAgent(props.fiche ? agentSelectionné.agent : agentListing[index]);
+    setAgent(props.fiche ? selectedAgent.agent : agentListing[index]);
     setDateListeValidéeH(dateListeValidée);
     setDateListeAttenteH(dateListeAttente);
-  }, [agentListing, agentSelectionné, index, dateListe]);
+  }, [agentListing, selectedAgent, index, dateListe]);
 
   useEffect(() => {
     setDateListe(agent[props.typeDate]);
     setAnneeCourante(
-      props.fiche ? props.annéeCouranteFiche : agent.anneeCourante
+      props.fiche ? props.annéeCouranteFiche : agent.currentYear
     );
   }, [agent]);
 
@@ -51,7 +51,7 @@ const ListeDates = (props) => {
     if (dateListe && agent) {
       dateListeReturn = dateListe.map((date, indexDate) => {
         if (
-          dateEntreDeux(
+          dateBetween(
             anneeCourante[dateFormat[0]],
             date,
             anneeCourante[dateFormat[1]]

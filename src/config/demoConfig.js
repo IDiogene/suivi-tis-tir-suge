@@ -1,6 +1,6 @@
 import { Agent } from "../classPersonalisé/agent";
 import datesP from "../classPersonalisé/dateP";
-import { dateAujourdhui } from "../function/logique";
+import { todayDate } from "../function/logique";
 import config from "../config/config";
 
 const rdmNbr = (min, max) => {
@@ -8,9 +8,9 @@ const rdmNbr = (min, max) => {
 };
 
 const rdmDate = () => {
-  let jour = rdmNbr(1, 31);
-  let mois = rdmNbr(1, 12);
-  let annee = rdmNbr(2023, dateAujourdhui.annee);
+  let day = rdmNbr(1, 31);
+  let month = rdmNbr(1, 12);
+  let year = rdmNbr(2023, todayDate.year);
 
   let statut;
   let rand = Math.random();
@@ -22,7 +22,7 @@ const rdmDate = () => {
     statut = "annulé";
   }
 
-  return new datesP(jour, mois, annee, statut);
+  return new datesP(day, month, year, statut);
 };
 
 

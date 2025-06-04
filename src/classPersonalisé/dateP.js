@@ -1,44 +1,32 @@
 import {
-  dateAujourdhui,
-  tempsAvant,
-  moisEnLettre,
-  tempsAvantString,
+  todayDate,
+  timeBefore,
+  monthInString,
+  timeBeforeString,
 } from "../function/logique";
 
 class datesP {
-  constructor(jour, mois, annee, stat = "en attente", comment = "") {
-    this.jour = jour;
-    this.mois = mois;
-    this.annee = annee;
+  constructor(day, month, year, stat = "en attente", comment = "") {
+    this.day = day;
+    this.month = month;
+    this.year = year;
     this.stat = stat;
     this.comment = comment;
   }
   afficherDate() {
-    return `${this.jour < 10 ? "0" + this.jour : this.jour} / ${
-      this.mois < 10 ? "0" + this.mois : this.mois
-    } / ${this.annee}`;
+    return `${this.day < 10 ? "0" + this.day : this.day} / ${
+      this.month < 10 ? "0" + this.month : this.month
+    } / ${this.year}`;
   }
   afficherDateFormat1() {
-    return `${this.jour} ${moisEnLettre(this.mois)} ${this.annee}`;
-  }
-  afficherDateFormat2() {
-    return `Reste ${this.ans} ans, ${this.mois} mois, et ${this.jour} jours`;
-  }
-  jours() {
-    return this.jour;
-  }
-  mois() {
-    return this.mois;
-  }
-  annee() {
-    return this.annee;
+    return `${this.day} ${monthInString(this.month)} ${this.year}`;
   }
   delais() {
-    let delais = tempsAvant(dateAujourdhui, this);
+    let delais = timeBefore(todayDate, this);
     return delais;
   }
   delaisFormat1() {
-    let delais = tempsAvantString(dateAujourdhui, this);
+    let delais = timeBeforeString(todayDate, this);
     if (delais === "Aucun délai restant") {
       delais = "Port d'arme hors délai";
     }

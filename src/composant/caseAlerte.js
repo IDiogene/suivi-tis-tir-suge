@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { trieDates } from '../function/logique';
+import { sortDate } from '../function/logique';
 import "./caseAlerte.css";
 import { useContext, useState } from "react";
 import contextAgent from "../context/contextAgent";
@@ -12,17 +12,17 @@ const CaseAlerte = () => {
     // filtrer et trier les urgence tir et tis, on ne garde que les 5 premiers
     const urgence = (type) => {
         return agentListing.filter((agent) => {
-        return agent[`urgence${type}`] >= 0;
+        return agent[type] >= 0;
     }).sort((a, b) => {
-        return b[`urgence${type}`] - a[`urgence${type}`];
+        return b[type] - a[type];
     }).slice(0, 5);}
 
 
 
     return (
         <div id='caseAlerte'>
-            <CaseAlerteType type="Tir" array={urgence('Tir')}/>
-            <CaseAlerteType type="Tis" array={urgence('Tis')}/>
+            <CaseAlerteType type="shootingTrainingDates" array={urgence('shootingUrgency')}/>
+            <CaseAlerteType type="tisTrainingDates" array={urgence('tisUrgency')}/>
         </div>
     );
 };
@@ -44,11 +44,11 @@ const CaseAlerteType = ({ type, array }) => {
         return (
                 <p 
                 className='nomAlerte' 
-                key={agent.nom + index}
+                key={agent.name + index}
                 onMouseEnter={(e) => hover("enter", agent)}
                 onMouseLeave={(e) => hover("leave", agent)}
                 >
-                    {agent.nom}
+                    {agent.name}
                 </p>
         );
     });
@@ -60,21 +60,23 @@ const CaseAlerteType = ({ type, array }) => {
                 {
                     agentSurvolé !== null ? 
                     <div>
-                        <p>{agentSurvolé.nom + ' ' + agentSurvolé.prenom}</p>
+                        <p>{agentSurvolé.name + ' ' + agentSurvolé.surname}</p>
 
                         <p>{
-                        agentSurvolé.anneeCourante.dateFin.delaisFormat1()
+                        agentSurvolé.currentYear.endDate.delaisFormat1()
                          +
                         ' pour placer '
                          + 
-                        (2 - trieDates(
-                            agentSurvolé.anneeCourante.dateDebut, 
-                            agentSurvolé[`dates${type}`].filter((date) => {return date.stat !== "annulé" && date.stat !== "absence agent"}), 
-                            agentSurvolé.anneeCourante.dateFin).length) 
+                        
+                         // 2 - la longueur de la liste des dates triées, 2 etant le nombre de dates à placer
+                        (2 - sortDate(
+                            agentSurvolé.currentYear.startDate, 
+                            agentSurvolé[type].filter((date) => {return date.stat !== "annulé" && date.stat !== "absence agent"}), 
+                            agentSurvolé.currentYear.endDate).length) 
                             + 
                             ' ' 
                             + 
-                            type + (type === 'Tir' ? 's' : '')
+                            (type === "shootingTrainingDates" ? "Tirs" : "Tis")
                             
                             }</p>
 
@@ -88,7 +90,7 @@ const CaseAlerteType = ({ type, array }) => {
 
     return (
         <div className={`AlerteType`}>
-            <p className='titreAlerte'>Prochain {type} a prevoir : </p>
+            <p className='titreAlerte'>Prochains {(type === 'shootingTrainingDates' ?  'TIRS' : 'TIS')} a prevoir : </p>
             {arrayAffiche} 
             {survol === true ? survolAffichage() : null}
 

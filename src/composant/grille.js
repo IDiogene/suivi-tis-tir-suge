@@ -10,17 +10,17 @@ import config from "../config/config";
 
 
 ///// grille
-const Grille = () => {
+const Grid = () => {
   const { agentListing } = useContext(agentContext);
 
   return (
     <div className="grille">
-      <LigneTitre key="titre" />
+      <TitleLine key="titre" />
       <motion.div layout>
         {agentListing.length > 0 ? (
           agentListing.map((element, index) => {
             return (
-              <LigneAgent key={element.name + element.surname} index={index} />
+              <AgentLine key={element.name + element.surname} index={index} />
             );
           })
         ) : (
@@ -28,7 +28,7 @@ const Grille = () => {
         )}
       </motion.div>
       <br />
-      <BoutonAddAgent id="addAgent" />
+      <AddAgentButton id="addAgent" />
     </div>
   );
 };
@@ -40,29 +40,29 @@ la grille comprend la liste des agents, mais aussi les titres et le bouton d'ajo
 */
 
 // ligne titre
-const LigneTitre = () => {
+const TitleLine = () => {
   const { agentListing, setAgentListing } = useContext(agentContext);
   const [valChange, setValChange] = useState(false);
   const [trie, setTrie] = useState({
     type: "Nom",
-    ordre: "asc",
+    order: "asc",
   });
 
   const triePrécedent = useRef({
     type: "Nom",
-    ordre: "asc",
+    order: "asc",
   });
 
   useEffect(() => {
     setTrie({
       type: triePrécedent.type,
-      ordre: triePrécedent.ordre,
+      order: triePrécedent.order,
     });
   }, [agentListing]);
 
   const contentTrie = (contentBase) => {
     if (trie.type === contentBase) {
-      if (trie.ordre === "asc") {
+      if (trie.order === "asc") {
         return contentBase + " \u25B2";
       } else {
         return contentBase + " \u25BC";
@@ -74,11 +74,11 @@ const LigneTitre = () => {
 
   const trieAgent = (type) => {
     if (triePrécedent.type === type) {
-      triePrécedent.ordre === "desc"
-        ? (triePrécedent.ordre = "asc")
-        : (triePrécedent.ordre = "desc");
+      triePrécedent.order === "desc"
+        ? (triePrécedent.order = "asc")
+        : (triePrécedent.order = "desc");
     } else {
-      triePrécedent.ordre = "asc";
+      triePrécedent.order = "asc";
       triePrécedent.type = type;
     }
 
@@ -86,14 +86,14 @@ const LigneTitre = () => {
     switch (type) {
       case "Nom":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "asc"
+          triePrécedent.order === "asc"
             ? a.name.localeCompare(b.name)
             : b.name.localeCompare(a.name)
         );
         break;
       case "Date de port d'arme":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "asc"
+          triePrécedent.order === "asc"
             ? a.weaponPermitDate.endDate.delais() -
               b.weaponPermitDate.endDate.delais()
             : b.weaponPermitDate.endDate.delais() -
@@ -102,7 +102,7 @@ const LigneTitre = () => {
         break;
       case "Année en courrante":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "asc"
+          triePrécedent.order === "asc"
             ? a.currentYear.endDate.delais() -
               b.currentYear.endDate.delais()
             : b.currentYear.endDate.delais() -
@@ -111,14 +111,14 @@ const LigneTitre = () => {
         break;
       case "Date des tirs":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "desc"
+          triePrécedent.order === "desc"
             ? a.shootingUrgency  - b.shootingUrgency 
             : b.shootingUrgency  - a.shootingUrgency 
         );
         break;
       case "Date des tis":
         newListing.sort((a, b) =>
-          triePrécedent.ordre === "desc"
+          triePrécedent.order === "desc"
             ? a.tisUrgency - b.tisUrgency
             : b.tisUrgency - a.tisUrgency
         );
@@ -160,7 +160,7 @@ const LigneTitre = () => {
 };
 
 // ligne agent
-const LigneAgent = (props) => {
+const AgentLine = (props) => {
   const { agentListing, agentSelectionné, setAgentSelectionné } =
     useContext(agentContext);
   const [index, setIndex] = useState(props.index);
@@ -230,7 +230,7 @@ const LigneAgent = (props) => {
 };
 
 // bouton d'ajout d'agent
-const BoutonAddAgent = (props) => {
+const AddAgentButton = (props) => {
   const { agentListing, setAgentListing } = useContext(agentContext);
   const [addMode, setAddMod] = useState(false);
 
@@ -415,4 +415,4 @@ const BoutonAddAgent = (props) => {
   );
 };
 
-export { Grille };
+export { Grid };

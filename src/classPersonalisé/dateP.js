@@ -1,8 +1,8 @@
 import {
-  dateAujourdhui,
-  tempsAvant,
-  moisEnLettre,
-  tempsAvantString,
+  todayDate,
+  timeBefore,
+  monthInString,
+  timeBeforeString,
 } from "../function/logique";
 
 class datesP {
@@ -19,14 +19,14 @@ class datesP {
     } / ${this.year}`;
   }
   afficherDateFormat1() {
-    return `${this.day} ${moisEnLettre(this.month)} ${this.year}`;
+    return `${this.day} ${monthInString(this.month)} ${this.year}`;
   }
   delais() {
-    let delais = tempsAvant(dateAujourdhui, this);
+    let delais = timeBefore(todayDate, this);
     return delais;
   }
   delaisFormat1() {
-    let delais = tempsAvantString(dateAujourdhui, this);
+    let delais = timeBeforeString(todayDate, this);
     if (delais === "Aucun délai restant") {
       delais = "Port d'arme hors délai";
     }

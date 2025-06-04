@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, use } from "react";
 import contextAgent from "../../context/contextAgent";
 import { Agent } from "../../classPersonalisé/agent";
 import datesP from "../../classPersonalisé/dateP";
-import { dateAujourdhui, tempsAvant } from "../../function/logique";
+import { todayDate, timeBefore } from "../../function/logique";
 
 
 /* logique et affichage d'une date 
@@ -22,9 +22,9 @@ const DatesPersoButton = (props) => {
       ? !newDate
         ? agentListing[indexAgent][typeDate][indexDate]
         : new datesP(
-            dateAujourdhui.day,
-            dateAujourdhui.month,
-            dateAujourdhui.year,
+            todayDate.day,
+            todayDate.month,
+            todayDate.year,
             "en attente",
             "date attribuée"
           )
@@ -42,9 +42,9 @@ const DatesPersoButton = (props) => {
     !newDate && date
       ? new datesP(date.day, date.month, date.year, date.stat, date.comment)
       : new datesP(
-          dateAujourdhui.day,
-          dateAujourdhui.month,
-          dateAujourdhui.year
+          todayDate.day,
+          todayDate.month,
+          todayDate.year
         )
   );
   
@@ -63,9 +63,9 @@ const DatesPersoButton = (props) => {
         ? !newDate
           ? agentListing[indexAgent][typeDate][indexDate]
           : new datesP(
-              dateAujourdhui.day,
-              dateAujourdhui.month,
-              dateAujourdhui.year,
+              todayDate.day,
+              todayDate.month,
+              todayDate.year,
               "en attente",
               "date attribuée"
             )
@@ -224,7 +224,7 @@ const DatesPersoButton = (props) => {
                   case "validé":
                     return "green";
                   case "en attente":
-                    return tempsAvant(dateAujourdhui, date) < 0
+                    return timeBefore(todayDate, date) < 0
                       ? "blue"
                       : "orange";
                   case "annulé":
@@ -286,10 +286,10 @@ const DatesPersoButton = (props) => {
           sans quoi elle ne peut être validée, 
           et l'agent ne peut être absent
           */ }
-        {tempsAvant(dateAujourdhui, dateAttribution) <= 0 ? (
+        {timeBefore(todayDate, dateAttribution) <= 0 ? (
           <option value="validé">validé</option>
         ) : null}
-        {tempsAvant(dateAujourdhui, dateAttribution) <= 0 ? (
+        {timeBefore(todayDate, dateAttribution) <= 0 ? (
           <option value="absence agent">absence agent</option>
         ) : null}
 

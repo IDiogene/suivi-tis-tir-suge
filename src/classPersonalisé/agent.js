@@ -1,9 +1,9 @@
 import {
-  dateEntreDeux,
-  dateAujourdhui,
-  tempsAvant,
+  dateBetween,
+  todayDate,
+  timeBefore,
   addDate,
-  trieDates,
+  sortDate,
 } from "../function/logique";
 import datesP from "./dateP";
 
@@ -81,9 +81,9 @@ class Agent {
     {
       for (let testDate in dates) {
         if (
-          dateEntreDeux(
+          dateBetween(
             dates[testDate].start,
-            dateAujourdhui,
+            todayDate,
             dates[testDate].end
           )
         ) {
@@ -101,7 +101,7 @@ class Agent {
                 {endDate.afficherDate()}
               </div>
             ),
-            finDans: tempsAvant(dateAujourdhui, endDate),
+            finDans: timeBefore(todayDate, endDate),
           };
         }
       }
@@ -123,7 +123,7 @@ class Agent {
                 {endDate.afficherDate()}
               </div>
             ),
-            finDans: tempsAvant(dateAujourdhui, endDate),
+            finDans: timeBefore(todayDate, endDate),
           };
         }
       }
@@ -137,7 +137,7 @@ class Agent {
     let facteurDate = 0;
     if (this.currentYear) {
       // Calculer le nombre de dates dans la plage spécifiée
-      const numberOfDate = trieDates(
+      const numberOfDate = sortDate(
         this.currentYear.startDate,
         consideringDates,
         this.currentYear.endDate

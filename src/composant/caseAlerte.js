@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { trieDates } from '../function/logique';
+import { sortDate } from '../function/logique';
 import "./caseAlerte.css";
 import { useContext, useState } from "react";
 import contextAgent from "../context/contextAgent";
@@ -67,7 +67,9 @@ const CaseAlerteType = ({ type, array }) => {
                          +
                         ' pour placer '
                          + 
-                        (2 - trieDates(
+                        
+                         // 2 - la longueur de la liste des dates triées, 2 etant le nombre de dates à placer
+                        (2 - sortDate(
                             agentSurvolé.currentYear.startDate, 
                             agentSurvolé[type].filter((date) => {return date.stat !== "annulé" && date.stat !== "absence agent"}), 
                             agentSurvolé.currentYear.endDate).length) 

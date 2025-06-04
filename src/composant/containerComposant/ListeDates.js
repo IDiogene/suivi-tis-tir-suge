@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import DatesPersoButton from "../boutonType/DatesPersoButton";
 import agentContext from "../../context/contextAgent";
-import { dateEntreDeux } from "../../function/logique";
+import { dateBetween } from "../../function/logique";
 
 const ListeDates = (props) => {
   const { agentListing, agentSelectionné } = useContext(agentContext);
@@ -51,7 +51,7 @@ const ListeDates = (props) => {
     if (dateListe && agent) {
       dateListeReturn = dateListe.map((date, indexDate) => {
         if (
-          dateEntreDeux(
+          dateBetween(
             anneeCourante[dateFormat[0]],
             date,
             anneeCourante[dateFormat[1]]

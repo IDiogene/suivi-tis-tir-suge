@@ -16,11 +16,11 @@ const dateEnCour = {
   },
 }
 
-let dateAujourdhui = new datesP(dateEnCour.day(), dateEnCour.month(), dateEnCour.year());
+let todayDate = new datesP(dateEnCour.day(), dateEnCour.month(), dateEnCour.year());
 
 
 /// convertir un mois en lettre
-const moisEnLettre = (month) => {
+const monthInString = (month) => {
   switch (month) {
       case 1: return 'Janvier';
       case 2: return 'Février';
@@ -38,8 +38,8 @@ const moisEnLettre = (month) => {
   }
 }
 
-// verifier si une date est entre deux dates
-const dateEntreDeux = (dateMin, dateComparee, dateMax) => {
+// verifier si une date est contenu entre deux dates
+const dateBetween = (dateMin, dateComparee, dateMax) => {
   let dateMinVal = dateMin.year * 1000 + dateMin.month * 40 + dateMin.day;
   let dateMaxVal = dateMax.year * 1000 + dateMax.month * 40 + dateMax.day;
   let dateCompareeVal = dateComparee.year * 1000 + dateComparee.month * 40 + dateComparee.day;
@@ -50,27 +50,27 @@ const dateEntreDeux = (dateMin, dateComparee, dateMax) => {
   }
 }
 
-// trie une liste de date entre deux dates (necessite la fonction 'dateEntreDeux')
-const trieDates = (startDate, liste, endDate) => {
-  let listeTrie = [];
-  if (startDate && endDate && liste) {
-  for (let i = 0; i < liste.length; i++) {
+// retourne la liste des dates contenu entre deux dates, necessite la fonction dateBetween
+const sortDate = (startDate, array, endDate) => {
+  let sortedArray = [];
+  if (startDate && endDate && array) {
+  for (let i = 0; i < array.length; i++) {
     if (
-      dateEntreDeux(
+      dateBetween(
         startDate,
-        liste[i],
+        array[i],
         endDate,
       )
     ) {
-      listeTrie.push(liste[i]);
+      sortedArray.push(array[i]);
     }
   }
-  return listeTrie;}
+  return sortedArray;}
 
 }
 
 // calcule le delais avant une date (en int, pour exprimer le nombre de jours)
-const tempsAvant = (date1, date2) => {
+const timeBefore = (date1, date2) => {
   // Crée des class Date standard pour les deux dates pour effectuer le calcul
   const d1 = new Date(date1.year, date1.month - 1, date1.day); 
   const d2 = new Date(date2.year, date2.month - 1, date2.day);
@@ -79,20 +79,21 @@ const tempsAvant = (date1, date2) => {
   const diffTemps = d2 - d1;
 
   // convertit les mls en jours
-  const joursRestants = Math.floor(diffTemps / (1000 * 60 * 60 * 24 ));
-  return joursRestants;
+  const remainingDays = Math.floor(diffTemps / (1000 * 60 * 60 * 24 ));
+  return remainingDays;
 };
 
 /*
 calcule le delais avant une date 
 (renvoie un string, en format lisible pour l'utilisateur)
-necessite la fonction 'tempsAvant'
+necessite la fonction 'timeBefore'
 */
-const tempsAvantString = (date1, date2) => {
+const timeBeforeString = (date1, date2) => {
 
-  const joursRestants = tempsAvant(date1, date2);
+  // resultat en jours, a injecter dans une class datesP a l'aide de addDate pour obtenir un format lisible
+  const remainingDays = timeBefore(date1, date2);
   let dateDelais = new datesP (0, 0, 0);
-  addDate(dateDelais, joursRestants, 0, 0);
+  addDate(dateDelais, remainingDays, 0, 0);
   let textes = '';
   switch (true) { 
       case dateDelais.year > 0:
@@ -155,4 +156,4 @@ const addDate = (date, day, month, year, copie = false) => {
 
 
 
-export { dateEntreDeux, dateAujourdhui, trieDates, tempsAvant, addDate, moisEnLettre, tempsAvantString};
+export { dateBetween, todayDate, sortDate, timeBefore, addDate, monthInString, timeBeforeString};

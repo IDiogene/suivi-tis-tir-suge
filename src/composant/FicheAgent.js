@@ -7,7 +7,7 @@ import { Agent } from "../classPersonalisé/agent";
 import datesP from "../classPersonalisé/dateP";
 
 // fiche agent, conteneur principal
-const FicheAgent = () => {
+const AgentSheet = () => {
   const {
     agentListing,
     setAgentListing,
@@ -21,7 +21,7 @@ const FicheAgent = () => {
     selectedAgent ? selectedAgent.index : null
   );
   const [modifier, setModifier] = useState(false);
-  const [agentModifié, setAgentModifié] = useState({
+  const [modifiedAgent, setModifiedAgent] = useState({
     name: agent ? { ...agent.name } : null,
     surname: agent ? { ...agent.surname } : null,
     weaponPermitDate: agent
@@ -51,7 +51,7 @@ const FicheAgent = () => {
 
   // enregistre des données temporaire modifier un agent, en lien avec 'boutonModif'
   useEffect(() => {
-    setAgentModifié({
+    setModifiedAgent({
       name: agent ? agent.name : null,
       surname: agent ? agent.surname : null,
       weaponPermitDate: agent
@@ -76,19 +76,19 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
     if (modifier && valChange) {
       setAgentListing((prev) => {
         const newListing = [...prev];
-        const newAgentModifié = new Agent(
-          agentModifié.name,
-          agentModifié.surname,
+        const newModifiedAgent = new Agent(
+          modifiedAgent.name,
+          modifiedAgent.surname,
           new datesP(
-            agentModifié.weaponPermitDate.day,
-            agentModifié.weaponPermitDate.month,
-            agentModifié.weaponPermitDate.year
+            modifiedAgent.weaponPermitDate.day,
+            modifiedAgent.weaponPermitDate.month,
+            modifiedAgent.weaponPermitDate.year
           ),
           agentListing[indexAgent].shootingTrainingDates,
           agentListing[indexAgent].shootingTrainingDates
         );
 
-        newListing[indexAgent] = newAgentModifié;
+        newListing[indexAgent] = newModifiedAgent;
         return newListing;
       });
     }
@@ -100,7 +100,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
 */
 
   // affiche les date anniversaire, ainsi que les date de formation, et les places sous les bonnes dates anniversaires
-  const addDateAnniversaire = () => {
+  const addAnniversaryDate = () => {
     let id = 0;
     const buttons = [];
     let lastDate =
@@ -169,35 +169,35 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
       {" "}
       {selectedAgent ? (
         <>
-          <BoutonModifier click={click} modif={modifier} />
-          <BoutonFermeFiche click={click} />
-          <BoutonModif
+          <EditButton click={click} modif={modifier} />
+          <CloseSheetButton click={click} />
+          <ModifierButton
             className="textes"
             value="name"
             type="text"
             id="nom"
             modif={modifier}
-            setterAgent={setAgentModifié}
+            setterAgent={setModifiedAgent}
           />
-          <BoutonModif
+          <ModifierButton
             className="textes"
             value="surname"
             type="text"
             id="prenom"
             modif={modifier}
-            setterAgent={setAgentModifié}
+            setterAgent={setModifiedAgent}
           />
 
-          <BoutonModif
+          <ModifierButton
             className="textes"
             type="date"
             value="weaponPermitDate"
             id="dpd"
             modif={modifier}
-            setterAgent={setAgentModifié}
+            setterAgent={setModifiedAgent}
           />
 
-          {addDateAnniversaire()}
+          {addAnniversaryDate()}
 
           <ButtonTypeBase
             className="textes"
@@ -209,7 +209,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
             content="dates Tir"
             id="datesTir"
           />
-          <BoutonSupression />
+          <SupressButton />
         </>
       ) : (
         <div>no</div>
@@ -225,7 +225,7 @@ agents qui ne sont utilisés que par cette dernière
 */
 
 // bouton pour fermer la fiche agent
-const BoutonFermeFiche = ({ click }) => {
+const CloseSheetButton = ({ click }) => {
   const { selectedAgent, setSelectedAgent } = useContext(agentContext);
   const fermeFiche = () => {
     click(false, false);
@@ -243,7 +243,7 @@ const BoutonFermeFiche = ({ click }) => {
 
 
 // bouton pour activer la modification de l'agent (la logique est contenue dans la fiche)
-const BoutonModifier = ({ click, modif }) => {
+const EditButton = ({ click, modif }) => {
   return (
     <>
       {modif ? (
@@ -269,7 +269,7 @@ const BoutonModifier = ({ click, modif }) => {
 
 
 // bouton pour modifier nom et prenom (le gros de la logique est contenu dans la fiche)
-const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
+const ModifierButton = ({ modif, value, className, id, setterAgent, type }) => {
   const { selectedAgent } = useContext(agentContext);
   const [agent, setAgent] = useState(
     selectedAgent ? selectedAgent.agent : null
@@ -349,7 +349,7 @@ const BoutonModif = ({ modif, value, className, id, setterAgent, type }) => {
 
 
 // bouton pour supprimer un agent (contient la logique)
-const BoutonSupression = (props) => {
+const SupressButton = (props) => {
   const { selectedAgent, setSelectedAgent } = useContext(agentContext);
   const { agentListing, setAgentListing } = useContext(agentContext);
 
@@ -372,4 +372,4 @@ const BoutonSupression = (props) => {
 };
 
 
-export default FicheAgent;
+export default AgentSheet;

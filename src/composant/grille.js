@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef, use } from "react";
 import "./grille.css";
-import ListeDates from "./containerComposant/ListeDates";
+import ListeDates from "./composant/ListeDates";
 import { ButtonTypeBase, ButtonTypeAlternative } from "./buttonType";
 import { Agent } from "../classPersonalisé/agent";
 import datesP from "../classPersonalisé/dateP";

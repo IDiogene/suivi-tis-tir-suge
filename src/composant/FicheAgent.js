@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./ficheAgent.css";
 import { ButtonTypeBase } from "./buttonType";
-import ListeDates from "./containerComposant/ListeDates";
+import ListeDates from "./composant/ListeDates";
 import agentContext from "../context/contextAgent";
 import { Agent } from "../classPersonalisé/agent";
 import datesP from "../classPersonalisé/dateP";

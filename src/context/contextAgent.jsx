@@ -43,12 +43,21 @@ export const AgentProvider = ({ children }) => {
     const [agentListing, setAgentListing] = useState([]); // la liste des agents
     const [selectedAgent, setSelectedAgent] = useState(null); // agent sélectionné, nécassaire pour la fiche agent
     const [dataCharged, setDataCharged] = useState(false); // assure le chargement initial des données dans de permettre la sauvegarde
+    const [saveStatus, setSaveStatus] = useState(true); // statut de la sauvegarde, nécassaire pour le rafraichissement de la liste des agents
 
  
 
     useEffect(() => {
        if ( dataCharged ) {
-        save(JSON.parse(JSON.stringify(agentListing)));}
+            ipcRenderer.invoke('save', save(JSON.parse(JSON.stringify(agentListing))))
+        .then((result) => {
+            setSaveStatus(true); // met à jour le statut de la sauvegarde
+            //console.log("sauvegarde effectué");
+        })
+        .catch((error) => {
+            setSaveStatus(false); // met à jour le statut de la sauvegarde en cas d'erreur
+            console.error("Erreur lors de l'appel Electron :", error);
+        });}
   }, [agentListing]);
 
   // chargement des données à l'initialisation du provider, double lecture pour refactoring anglais, compatible avec sauvegarde de la version française
@@ -97,7 +106,7 @@ export const AgentProvider = ({ children }) => {
   
     
 return (
-    <agentContext.Provider value={{ agentListing, setAgentListing, selectedAgent, setSelectedAgent }}>
+    <agentContext.Provider value={{ agentListing, setAgentListing, selectedAgent, setSelectedAgent, saveStatus, setSaveStatus, dataCharged, setDataCharged }}>
       {children}
     </agentContext.Provider>
   );

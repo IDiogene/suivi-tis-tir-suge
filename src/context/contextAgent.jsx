@@ -23,7 +23,7 @@ const save = (liste) => {
         });
 }
 // chargement
-const charger = async () => {
+const loadData = async () => {
   const result = await ipcRenderer.invoke('load')
   if (result.success) {
     return result.data;
@@ -32,6 +32,49 @@ const charger = async () => {
     return null;
   }
 }
+
+const fetchData = async () => {
+
+      const data = await loadData();
+      let agents = [];
+
+      if (data && data.length > 0) {
+        console.log("Données chargées :", data);
+        agents = data.map((agentData) => {
+          return new Agent(
+            agentData.name || agentData.nom,
+            agentData.surname || agentData.prenom,
+            new datesP(
+              agentData.weaponPermitDate?.startDate?.day || agentData.dateDePortArme?.dateDebut?.jour,
+              agentData.weaponPermitDate?.startDate?.month || agentData.dateDePortArme?.dateDebut?.mois,
+              agentData.weaponPermitDate?.startDate?.year || agentData.dateDePortArme?.dateDebut?.annee
+            ),
+            agentData.shootingTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.jour , date.mois , date.annee , date.stat, date.comment)), 
+            agentData.tisTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.jour ,  date.mois , date.annee , date.stat, date.comment))
+          );
+        });
+        
+
+      } else if (config.demo) {
+        console.log("Données de démonstration utilisées");
+        agents = demoConfig.map((agentData) => {
+          return new Agent(
+            agentData.name,
+            agentData.surname,
+            new datesP(
+              agentData.weaponPermitDate.startDate.day,
+              agentData.weaponPermitDate.startDate.month,
+              agentData.weaponPermitDate.startDate.year,
+            ),
+            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
+            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment))
+          );
+        });
+        
+      }
+      return agents;
+    };
+
 
 
 
@@ -51,58 +94,27 @@ export const AgentProvider = ({ children }) => {
        if ( dataCharged ) {
             ipcRenderer.invoke('save', save(JSON.parse(JSON.stringify(agentListing))))
         .then((result) => {
-            setSaveStatus(true); // met à jour le statut de la sauvegarde
+            setSaveStatus(true); 
+            // met à jour le statut de la sauvegarde
             //console.log("sauvegarde effectué");
         })
         .catch((error) => {
             setSaveStatus(false); // met à jour le statut de la sauvegarde en cas d'erreur
             console.error("Erreur lors de l'appel Electron :", error);
         });}
-  }, [agentListing]);
+      }, [agentListing]);
 
   // chargement des données à l'initialisation du provider, double lecture pour refactoring anglais, compatible avec sauvegarde de la version française
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await charger();
-      if (data && data.length > 0) {
-        console.log("Données chargées :", data);
-        const agents = data.map((agentData) => {
-          return new Agent(
-            agentData.name || agentData.nom,
-            agentData.surname || agentData.prenom,
-            new datesP(
-              agentData.weaponPermitDate?.startDate?.day || agentData.dateDePortArme?.dateDebut?.jour,
-              agentData.weaponPermitDate?.startDate?.month || agentData.dateDePortArme?.dateDebut?.mois,
-              agentData.weaponPermitDate?.startDate?.year || agentData.dateDePortArme?.dateDebut?.annee
-            ),
-            agentData.shootingTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.jour , date.mois , date.annee , date.stat, date.comment)), 
-            agentData.tisTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.jour ,  date.mois , date.annee , date.stat, date.comment))
-          );
-        });
-        setAgentListing(agents);
+useEffect(() => {
+  const fetchAndSetData = async () => {
+    const agents = await fetchData();
+    setAgentListing(agents);
+    setDataCharged(true);
+  };
 
-      } else if (config.demo) {
-        console.log("Données de démonstration utilisées");
-        const agents = demoConfig.map((agentData) => {
-          return new Agent(
-            agentData.name,
-            agentData.surname,
-            new datesP(
-              agentData.weaponPermitDate.startDate.day,
-              agentData.weaponPermitDate.startDate.month,
-              agentData.weaponPermitDate.startDate.year,
-            ),
-            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
-            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment))
-          );
-        });
-        setAgentListing(agents);
-      }
-    };
-  
-    fetchData();
-    setDataCharged(true); // valide le chargement des données
-  }, []);
+  fetchAndSetData();
+}, []);
+
   
     
 return (

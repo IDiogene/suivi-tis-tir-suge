@@ -1,3 +1,12 @@
+## 🚫 Utilisation et droits
+
+Ce projet a été développé à titre personnel par **Hugo (IDiogene)**.
+
+Il est mis à disposition **uniquement pour consultation** dans le cadre d’une présentation. Le dépôt est **protégé** : toute reproduction, modification ou réutilisation du code est interdite sans autorisation écrite de l’auteur.
+
+👉 Pour toute demande ou présentation professionnelle : [canadashcb@gmail.com]
+
+
 # Application de gestion des formations SUGE
 
 ## 🧠 Description

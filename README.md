@@ -1,6 +1,6 @@
 ## 🚫 Utilisation et droits
 
-Ce projet a été développé à titre personnel par **Hugo (IDiogene)**.
+Ce projet a été développé à titre personnel par **Hugo CANADAS (IDiogene)**.
 
 Il est mis à disposition **uniquement pour consultation** dans le cadre d’une présentation. Le dépôt est **protégé** : toute reproduction, modification ou réutilisation du code est interdite sans autorisation écrite de l’auteur.
 

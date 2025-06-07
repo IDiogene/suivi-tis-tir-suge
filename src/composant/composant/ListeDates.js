@@ -103,8 +103,7 @@ const ListeDates = (props) => {
           if (dateListeValidéeH >= 2) {
             return "rgb(7, 194, 1)";
           } else if (
-            dateListeAttenteH + dateListeValidéeH >= 2 &&
-            delais < 180
+            dateListeAttenteH + dateListeValidéeH >= 2
           ) {
             return "rgb(48, 73, 43)";
           } else if (

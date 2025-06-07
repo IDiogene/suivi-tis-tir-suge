@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const os = require("os");
-const modeDev = false;
+const modeDev = true;
 const path = require("path");
 const fs = require("fs");
 const saveDirectory = modeDev

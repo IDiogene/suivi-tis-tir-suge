@@ -43,7 +43,7 @@ const dateBetween = (dateMin, dateComparee, dateMax) => {
   let dateMinVal = dateMin.year * 1000 + dateMin.month * 40 + dateMin.day;
   let dateMaxVal = dateMax.year * 1000 + dateMax.month * 40 + dateMax.day;
   let dateCompareeVal = dateComparee.year * 1000 + dateComparee.month * 40 + dateComparee.day;
-  if (dateMinVal <= dateCompareeVal && dateCompareeVal < dateMaxVal) {
+  if (dateMinVal <= dateCompareeVal && dateCompareeVal <= dateMaxVal) {
     return true;
   } else {
     return false;

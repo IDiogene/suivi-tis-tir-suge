@@ -12,16 +12,9 @@ const agentContext = createContext()
   fonctions de sauvegardes et de chargement des données
   fonctionne avec Electron
 */
-// sauvegarde
-const save = (liste) => {
-    ipcRenderer.invoke('save', liste)
-        .then((result) => {
-            //console.log("sauvegarde effectué");
-        })
-        .catch((error) => {
-            console.error("Erreur lors de l'appel Electron :", error);
-        });
-}
+
+
+
 // chargement
 const loadData = async () => {
   const result = await ipcRenderer.invoke('load')
@@ -92,11 +85,11 @@ export const AgentProvider = ({ children }) => {
 
     useEffect(() => {
        if ( dataCharged ) {
-            ipcRenderer.invoke('save', save(JSON.parse(JSON.stringify(agentListing))))
+            ipcRenderer.invoke('save', JSON.parse(JSON.stringify(agentListing)))
         .then((result) => {
-            setSaveStatus(true); 
+            setSaveStatus(result.success); // met à jour le statut de la sauvegarde
             // met à jour le statut de la sauvegarde
-            //console.log("sauvegarde effectué");
+            console.log("sauvegarde effectué", result.success, result.error);
         })
         .catch((error) => {
             setSaveStatus(false); // met à jour le statut de la sauvegarde en cas d'erreur

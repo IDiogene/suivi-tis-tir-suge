@@ -57,13 +57,15 @@ ipcMain.handle("save", async (event, data) => {
     // S'assurer que le dossier existe, sinon le créer
     await fs.promises.mkdir(saveDirectory, { recursive: true });
     const precData = await fs.promises.readFile(filePath, "utf-8");
+    if (Array.isArray(data)) {
 
     // compte le nombre d'agent et de données dans les deux fichiers
     const oldAgentCount = Object.keys(JSON.parse(precData)).length;
-    const newAgentCount = Object.keys(data).length;
+    const newAgentCount = Array.isArray(data) ? data.length : 0;
     const oldDataCount = dataCalculation(JSON.parse(precData));
-    const newDataCount = dataCalculation(data);
+    const newDataCount = dataCalculation(Array.isArray(data) ? data : []);
 
+   
     // si les données ne dépassent pas une différence de 1, la sauvegarde est autorisée
     const agentCountValide = Math.abs(oldAgentCount - newAgentCount ) <= 1 ? true : false;
     const dateCountValide = (Math.abs(oldDataCount - newDataCount) <= 1 || Math.abs(oldAgentCount - newAgentCount) === 1 ) ? true : false;
@@ -79,25 +81,31 @@ ipcMain.handle("save", async (event, data) => {
         (agentCountValide && dateCountValide) || oldAgentCount === 0
     ) {
 
-
       // Sauvegarder le fichier
       await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2));
+      console.log("Sauvegarde réussie :", filePath);
       return { success: true };
+
     } else {
-      console.error(
-        "Le nombre de données a changé de manière significative, sauvegarde annulée."
-      );
+      console.log("Le nombre de données a changé de manière significative, sauvegarde annulée." );
       return {
         success: false,
-        error:
-          "Le nombre de données a changé de manière significative, sauvegarde annulée.",
+        error: { agentCountValide, dateCountValide }
+      };
+    }} else {
+      console.log("Les données fournies ne sont pas un tableau valide.");
+      return {
+        success: false,
+        error: "Les données fournies ne sont pas un tableau valide.",
       };
     }
   } catch (error) {
-    console.error("Erreur de sauvegarde :", error);
+    console.log("Erreur de sauvegarde :", error);
     return { success: false, error };
   }
 });
+
+
 
 ipcMain.handle("load", async () => {
   try {

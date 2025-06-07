@@ -85,7 +85,7 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
             modifiedAgent.weaponPermitDate.year
           ),
           agentListing[indexAgent].shootingTrainingDates,
-          agentListing[indexAgent].shootingTrainingDates
+          agentListing[indexAgent].tisTrainingDates
         );
 
         newListing[indexAgent] = newModifiedAgent;

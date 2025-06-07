@@ -1,6 +1,6 @@
 {
   "name": "gestion",
-  "version": "0.1.42",
+  "version": "0.1.44",
   "main": "main.js",
   "homepage": "./",
   "private": true,

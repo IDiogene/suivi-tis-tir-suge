@@ -36,35 +36,38 @@ const blocDateP = () => {
 
 
 const demoConfig = [
-    new Agent(
-      "Dupont",
-      "Jean",
-      new datesP(22, 7, 2020),
-      blocDateP(),
-      blocDateP()
-    ),
-    new Agent(
-      "Martin",
-      "Pierre",
-      new datesP( 27, 6, 2022),
-      blocDateP(),
-      blocDateP(),
-
-    ),
-    new Agent(
-      "Durand",
-      "Marie",
-      new datesP( 15, 8, 2024),
-      blocDateP(),
-      blocDateP()
-    ),
-    new Agent(
-      "Leroy",
-      "Sophie",
-      new datesP( 10, 2, 2022),
-      blocDateP(),
-      blocDateP()
-    ),
+    new Agent({
+      name: "Dupont",
+      surname: "Jean",
+      weaponPermitDate: new datesP(22, 7, 2020),
+      shootingTrainingDates: blocDateP(),
+      tisTrainingDates: blocDateP(),
+      id: 1
+    }),
+    new Agent({
+      name: "Martin",
+      surname: "Sophie",
+      weaponPermitDate: new datesP(15, 3, 2021),
+      shootingTrainingDates: blocDateP(),
+      tisTrainingDates: blocDateP(),
+      id: 2
+    }),
+    new Agent({
+      name: "Durand",
+      surname: "Pierre",
+      weaponPermitDate: new datesP(10, 1, 2019),
+      shootingTrainingDates: blocDateP(),
+      tisTrainingDates: blocDateP(),
+      id: 3
+    }),
+    new Agent({
+      name: "Lefebvre",
+      surname: "Claire",
+      weaponPermitDate: new datesP(5, 6, 2022),
+      shootingTrainingDates: blocDateP(),
+      tisTrainingDates: blocDateP(),
+      id: 4
+    }),
   ]
 
   export default demoConfig;

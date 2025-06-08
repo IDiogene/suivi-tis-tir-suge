@@ -33,35 +33,37 @@ const fetchData = async () => {
 
       if (data && data.length > 0) {
         console.log("Données chargées :", data);
-        agents = data.map((agentData) => {
-          return new Agent(
-            agentData.name || agentData.nom,
-            agentData.surname || agentData.prenom,
-            new datesP(
+        agents = data.map((agentData, index) => {
+          return new Agent({
+            name: agentData.name || agentData.nom,
+            surname: agentData.surname || agentData.prenom,
+            weaponPermitDate: new datesP(
               agentData.weaponPermitDate?.startDate?.day || agentData.dateDePortArme?.dateDebut?.jour,
               agentData.weaponPermitDate?.startDate?.month || agentData.dateDePortArme?.dateDebut?.mois,
               agentData.weaponPermitDate?.startDate?.year || agentData.dateDePortArme?.dateDebut?.annee
             ),
-            agentData.shootingTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.jour , date.mois , date.annee , date.stat, date.comment)), 
-            agentData.tisTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.jour ,  date.mois , date.annee , date.stat, date.comment))
-          );
+            shootingTrainingDates: agentData.shootingTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTir?.map((date) => new datesP(date.jour , date.mois , date.annee , date.stat, date.comment)), 
+            tisTrainingDates: agentData.tisTrainingDates?.map((date) => new datesP(date.day , date.month , date.year , date.stat, date.comment)) || agentData.datesTis?.map((date) => new datesP(date.jour ,  date.mois , date.annee , date.stat, date.comment)),
+            id: agentData.id || index
+          });
         });
         
 
       } else if (config.demo) {
         console.log("Données de démonstration utilisées");
-        agents = demoConfig.map((agentData) => {
-          return new Agent(
-            agentData.name,
-            agentData.surname,
-            new datesP(
+        agents = demoConfig.map((agentData, index) => {
+          return new Agent({
+            name: agentData.name,
+            surname: agentData.surname,
+            weaponPermitDate: new datesP(
               agentData.weaponPermitDate.startDate.day,
               agentData.weaponPermitDate.startDate.month,
               agentData.weaponPermitDate.startDate.year,
             ),
-            agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
-            agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment))
-          );
+            shootingTrainingDates: agentData.shootingTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
+            tisTrainingDates: agentData.tisTrainingDates.map((date) => new datesP(date.day, date.month, date.year, date.stat, date.comment)),
+            id: agentData.id || index
+          });
         });
         
       }

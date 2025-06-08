@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const os = require("os");
-const modeDev = false;
+const modeDev = true;
 const path = require("path");
 const fs = require("fs");
 const saveDirectory = modeDev
@@ -16,6 +16,47 @@ const dataCalculation = (data) => {
   });
   return count;
 }
+
+const validateNewSave = (oldData, newData) => {
+  let diffCountAgent = 0;
+  let diffCountDates = 0;
+  let isValide = false;
+  if (Array.isArray(newData) && Array.isArray(oldData)) {
+    for (let i = 0; i < (newData.length > oldData.length ? newData.length : oldData.length ); i++) {
+      const newAgent = newData[i];
+      const oldAgent = oldData.find(agent => agent === newAgent);
+      if (oldAgent) {
+        for (let i = 0; i < (newAgent.shootingTrainingDates.length > oldAgent.shootingTrainingDates.length ? newAgent.shootingTrainingDates.length : oldAgent.shootingTrainingDates.length ); i++) {
+          const newDate = newAgent.shootingTrainingDates[i];
+          if (!oldAgent.shootingTrainingDates.includes(newDate) || !newDate) {
+            diffCountDates++;
+          };
+        }
+        for (let i = 0; i <  (newAgent.tisTrainingDates.length > oldAgent.tisTrainingDates.length ? newAgent.tisTrainingDates.length : oldAgent.tisTrainingDates.length ); i++) {
+          const newDate = newAgent.tisTrainingDates[i];
+          if (!oldAgent.tisTrainingDates.includes(newDate) || !newDate) {
+            diffCountDates++;
+          };
+        }
+      } else {
+        diffCountAgent++;
+      }
+    }
+  }
+  if ((diffCountAgent <= 1 && diffCountDates === 0) || diffCountDates <= 1 && diffCountAgent === 0) {
+    isValide = true;
+  } else {
+    isValide = false;
+  }
+  console.log("Validation de la sauvegarde : ", isValide);
+  console.log("Nombre d'agents différents :", diffCountAgent);
+  console.log("Nombre de dates différents :", diffCountDates);
+  
+  return isValide;
+
+}
+
+
 
 //// bloc de code pour la creation de la fenetre et les mechanismes de bases
 function createWindow() {

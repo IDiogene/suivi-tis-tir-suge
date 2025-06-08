@@ -293,6 +293,18 @@ const AddAgentButton = (props) => {
     setNewAgent(setterNewAgent);
   };
 
+    const idSelect = () => {
+      let newId;
+      let isUnique = false;
+    
+      while (!isUnique) {
+        newId = Math.floor(Math.random() * 10000000);
+        isUnique = !agentListing.some(agent => agent.id === newId);
+      }
+    
+      return newId;
+    };
+
   // fonction d'ajout de l'agent en fonction de l'agent temporaire
   const addAgent = () => {
     if (
@@ -303,17 +315,18 @@ const AddAgentButton = (props) => {
       setAgentListing((prev) => {
         let newAgentListing = [...prev];
         newAgentListing.push(
-          new Agent(
-            newAgent.name,
-            newAgent.surname,
-            new datesP(
+          new Agent({
+            name: newAgent.name,
+            surname: newAgent.surname,
+            weaponPermitDate: new datesP(
               newAgent.dpd.day,
               newAgent.dpd.month,
               newAgent.dpd.year,
               false,
               false
-            )
-          )
+            ),
+            id: idSelect(),
+        })
         );
         return newAgentListing;
       });

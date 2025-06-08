@@ -9,7 +9,8 @@ import datesP from "./dateP";
 
 
 class Agent {
-  constructor(name, surname, weaponPermitDate, shootingDates = [], tisDates = []) {
+  constructor({name, surname, weaponPermitDate, shootingTrainingDates = [], tisTrainingDates = [], id}) {
+    this.id = id;
     this.name = name;
     this.surname = surname;
     this.weaponPermitDate = {
@@ -19,8 +20,8 @@ class Agent {
     this.permitAnniversaryDates = this.createWeaponPermitAnniversaryDate
 ();
     this.currentYear = this.getCurrentYear();
-    this.shootingTrainingDates = shootingDates;
-    this.tisTrainingDates = tisDates;
+    this.shootingTrainingDates = shootingTrainingDates;
+    this.tisTrainingDates = tisTrainingDates;
     this.shootingUrgency  = this.getUrgencyLevel(this.shootingTrainingDates);
     this.tisUrgency = this.getUrgencyLevel(this.tisTrainingDates);
   }

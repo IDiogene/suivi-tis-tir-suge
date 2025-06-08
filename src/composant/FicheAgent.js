@@ -76,17 +76,18 @@ mode permet de lancer ou d'annuler la modification, selon sa valeur
     if (modifier && valChange) {
       setAgentListing((prev) => {
         const newListing = [...prev];
-        const newModifiedAgent = new Agent(
-          modifiedAgent.name,
-          modifiedAgent.surname,
-          new datesP(
+        const newModifiedAgent = new Agent({
+          name: modifiedAgent.name,
+          surname: modifiedAgent.surname,
+          weaponPermitDate: new datesP(
             modifiedAgent.weaponPermitDate.day,
             modifiedAgent.weaponPermitDate.month,
             modifiedAgent.weaponPermitDate.year
           ),
-          agentListing[indexAgent].shootingTrainingDates,
-          agentListing[indexAgent].tisTrainingDates
-        );
+          shootingTrainingDates: agentListing[indexAgent].shootingTrainingDates,
+          tisTrainingDates: agentListing[indexAgent].tisTrainingDates,
+          id: agentListing[indexAgent].id
+        });
 
         newListing[indexAgent] = newModifiedAgent;
         return newListing;

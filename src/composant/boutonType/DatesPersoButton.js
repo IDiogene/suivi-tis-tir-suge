@@ -178,17 +178,18 @@ const DatesPersoButton = (props) => {
 
     setAgentListing((prev) => {
       let newAgentListing = [...prev];
-      const agent = new Agent(
-        newAgentListing[indexAgent].name,
-        newAgentListing[indexAgent].surname,
-        new datesP(
+      const agent = new Agent({
+        name: newAgentListing[indexAgent].name,
+        surname: newAgentListing[indexAgent].surname,
+        weaponPermitDate: new datesP(
           newAgentListing[indexAgent].weaponPermitDate.startDate.day,
           newAgentListing[indexAgent].weaponPermitDate.startDate.month,
           newAgentListing[indexAgent].weaponPermitDate.startDate.year
         ),
-        newDateListe(typeDate, "shootingTrainingDates"),
-        newDateListe(typeDate, "tisTrainingDates")
-      );
+        shootingTrainingDates: newDateListe(typeDate, "shootingTrainingDates"),
+        tisTrainingDates: newDateListe(typeDate, "tisTrainingDates"),
+        id: newAgentListing[indexAgent].id,
+      });
       newAgentListing[indexAgent] = agent;
       return newAgentListing;
     });

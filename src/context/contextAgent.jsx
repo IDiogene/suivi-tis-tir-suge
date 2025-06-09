@@ -16,7 +16,7 @@ const agentContext = createContext()
 
 
 // chargement
-const loadData = async () => {
+const fetchData = async () => {
   const result = await ipcRenderer.invoke('load')
   if (result.success) {
     return result.data;
@@ -26,9 +26,9 @@ const loadData = async () => {
   }
 }
 
-const fetchData = async () => {
+const creatListing = async () => {
 
-      const data = await loadData();
+      const data = await fetchData();
       let agents = [];
 
       if (data && data.length > 0) {
@@ -102,7 +102,7 @@ export const AgentProvider = ({ children }) => {
   // chargement des données à l'initialisation du provider, double lecture pour refactoring anglais, compatible avec sauvegarde de la version française
 useEffect(() => {
   const fetchAndSetData = async () => {
-    const agents = await fetchData();
+    const agents = await creatListing();
     setAgentListing(agents);
     setDataCharged(true);
   };

@@ -22,22 +22,27 @@ const validateNewSave = (oldData, newData) => {
   let diffCountDates = 0;
   let isValide = false;
   if (Array.isArray(newData) && Array.isArray(oldData)) {
-    for (let i = 0; i < (newData.length > oldData.length ? newData.length : oldData.length ); i++) {
-      const newAgent = newData[i];
-      const oldAgent = oldData.find(agent => agent === newAgent);
-      if (oldAgent) {
-        for (let i = 0; i < (newAgent.shootingTrainingDates.length > oldAgent.shootingTrainingDates.length ? newAgent.shootingTrainingDates.length : oldAgent.shootingTrainingDates.length ); i++) {
-          const newDate = newAgent.shootingTrainingDates[i];
-          if (!oldAgent.shootingTrainingDates.includes(newDate) || !newDate) {
+    let biggestArray = (newData.length >= oldData.length ) ? newData : oldData;
+    let smallestArray = (newData.length < oldData.length ) ? newData : oldData;
+
+    for (let i = 0; i < biggestArray.length; i++) {
+      const agentBigArr = newData[i];
+      const agentSmallArr = smallestArray.find(agent => agent.id === agentBigArr.id);
+      if (agentSmallArr) {
+        for (let i = 0; i < biggestArray.length; i++) {
+          let verifiedDate = agentBigArr.shootingTrainingDates[i];
+          if (!agentSmallArr.shootingTrainingDates.some(verifiedDate) || !verifiedDate) {
             diffCountDates++;
           };
         }
-        for (let i = 0; i <  (newAgent.tisTrainingDates.length > oldAgent.tisTrainingDates.length ? newAgent.tisTrainingDates.length : oldAgent.tisTrainingDates.length ); i++) {
-          const newDate = newAgent.tisTrainingDates[i];
-          if (!oldAgent.tisTrainingDates.includes(newDate) || !newDate) {
+        
+        for (let i = 0; i < biggestArray.length; i++) {
+          let verifiedDate = agentBigArr.tisTrainingDates[i];
+          if (!agentSmallArr.tisTrainingDates.some(verifiedDate) || !verifiedDate) {
             diffCountDates++;
           };
         }
+
       } else {
         diffCountAgent++;
       }

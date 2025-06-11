@@ -7,60 +7,8 @@ const saveDirectory = modeDev
   ? path.join(__dirname, "save")
   : path.join(os.homedir(), "Documents", "sauvegardeGestionDpdAgent");
 const filePath = path.join(saveDirectory, "sauvegarde.json");
-
-const dataCalculation = (data) => {
-  let count = 0;
-  data.forEach(element => {
-     count += (element.shootingTrainingDates || element.datesTir || []).length
-     count += (element.tisTrainingDates || element.datesTis || []).length 
-  });
-  return count;
-}
-
-const validateNewSave = (oldData, newData) => {
-  let diffCountAgent = 0;
-  let diffCountDates = 0;
-  let isValide = false;
-  if (Array.isArray(newData) && Array.isArray(oldData)) {
-    let biggestArray = (newData.length >= oldData.length ) ? newData : oldData;
-    let smallestArray = (newData.length < oldData.length ) ? newData : oldData;
-
-    for (let i = 0; i < biggestArray.length; i++) {
-      const agentBigArr = newData[i];
-      const agentSmallArr = smallestArray.find(agent => agent.id === agentBigArr.id);
-      if (agentSmallArr) {
-        for (let i = 0; i < biggestArray.length; i++) {
-          let verifiedDate = agentBigArr.shootingTrainingDates[i];
-          if (!agentSmallArr.shootingTrainingDates.some(verifiedDate) || !verifiedDate) {
-            diffCountDates++;
-          };
-        }
-        
-        for (let i = 0; i < biggestArray.length; i++) {
-          let verifiedDate = agentBigArr.tisTrainingDates[i];
-          if (!agentSmallArr.tisTrainingDates.some(verifiedDate) || !verifiedDate) {
-            diffCountDates++;
-          };
-        }
-
-      } else {
-        diffCountAgent++;
-      }
-    }
-  }
-  if ((diffCountAgent <= 1 && diffCountDates === 0) || diffCountDates <= 1 && diffCountAgent === 0) {
-    isValide = true;
-  } else {
-    isValide = false;
-  }
-  console.log("Validation de la sauvegarde : ", isValide);
-  console.log("Nombre d'agents différents :", diffCountAgent);
-  console.log("Nombre de dates différents :", diffCountDates);
-  
-  return isValide;
-
-}
-
+const validateNewSave = require("./functionElectron/ProtectSave").validateNewSave;
+const runAllTests = require("./functionElectron/ProtectSave").runAllTests;
 
 
 //// bloc de code pour la creation de la fenetre et les mechanismes de bases
@@ -98,33 +46,18 @@ app.on("window-all-closed", () => {
 
 //// bloc de code pour la creation de la fenetre et les mechanismes de bases
 
+runAllTests();
+
 ipcMain.handle("save", async (event, data) => {
   try {
     // S'assurer que le dossier existe, sinon le créer
     await fs.promises.mkdir(saveDirectory, { recursive: true });
     const precData = await fs.promises.readFile(filePath, "utf-8");
     if (Array.isArray(data)) {
-
-    // compte le nombre d'agent et de données dans les deux fichiers
-    const oldAgentCount = Object.keys(JSON.parse(precData)).length;
-    const newAgentCount = Array.isArray(data) ? data.length : 0;
-    const oldDataCount = dataCalculation(JSON.parse(precData));
-    const newDataCount = dataCalculation(Array.isArray(data) ? data : []);
-
-   
-    // si les données ne dépassent pas une différence de 1, la sauvegarde est autorisée
-    const agentCountValide = Math.abs(oldAgentCount - newAgentCount ) <= 1 ? true : false;
-    const dateCountValide = (Math.abs(oldDataCount - newDataCount) <= 1 || Math.abs(oldAgentCount - newAgentCount) === 1 ) ? true : false;
-
-    console.log ( "nombre d'agent precedent :", oldAgentCount,
-      "nombre d'agent actuel :", newAgentCount,)
-    console.log ( "nombre de données precedent :", oldDataCount,
-      "nombre de données actuel :", newDataCount,)
     
-
-    // verifie la difference de nombre de données, s'assure donc que la modifification est donc bien initié par l'utilisateur
+    // verifie la difference les differences entre les données a enregistrer et les précédente, s'assure donc que la modifification est donc bien initié par l'utilisateur
     if (
-        (agentCountValide && dateCountValide) || oldAgentCount === 0
+        validateNewSave(JSON.parse(precData), data)
     ) {
 
       // Sauvegarder le fichier

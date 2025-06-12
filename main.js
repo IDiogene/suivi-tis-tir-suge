@@ -50,9 +50,19 @@ runAllTests();
 
 ipcMain.handle("save", async (event, data) => {
   try {
-    // S'assurer que le dossier existe, sinon le créer
+    // S'assurer que le dossier et le fichier existeent, sinon le créer
     await fs.promises.mkdir(saveDirectory, { recursive: true });
-    const precData = await fs.promises.readFile(filePath, "utf-8");
+    let precData;
+    try {
+      precData = await fs.promises.readFile(filePath, "utf-8");
+    } catch (error) {
+      // Si le fichier n'existe pas, on le crée avec un tableau vide
+      await fs.promises.writeFile(filePath, JSON.stringify([]));
+      precData = await fs.promises.readFile(filePath, "utf-8");
+      console.log("Fichier de sauvegarde créé :", filePath);
+    }
+
+
     if (Array.isArray(data)) {
     
     // verifie la difference les differences entre les données a enregistrer et les précédente, s'assure donc que la modifification est donc bien initié par l'utilisateur

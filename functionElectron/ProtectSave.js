@@ -1,5 +1,4 @@
-import { waitFor } from "@testing-library/dom";
-
+// Fonction de comparaisons des sauvegardes, pour valider une nouvelle sauvegarde.
 export const validateNewSave = (oldData, newData) => {
   let diffCountAgent = 0;
   let diffCountDates = 0;
@@ -28,7 +27,7 @@ export const validateNewSave = (oldData, newData) => {
 
     return diffCount;
   };
-  if (oldData.length !== 0) {
+  if (oldData && oldData.length !== 0) {
 
   const oldById = new Map(oldData.map(agent => [agent.id, agent]));
   const newById = new Map(newData.map(agent => [agent.id, agent]));
@@ -88,22 +87,31 @@ const runTest = (desc, expected, result) => {
 
 
 
-//  tests automatisées regroupés 
+//  fonction des tests automatisées regroupés 
 export const runAllTests = () => {
+
+  // configuration des agents et de leurs dates
   const baseAgent = agent(1, [
     date(1, 1, 2025, "en attente")
   ], [
     date(5, 2, 2025, "fait", "RAS")
   ]);
+
+    const baseAgent2DatesModif = agent(1, [
+    date(5, 5, 2025, "en attente")
+  ], [
+    date(5, 8, 2025, "fait", "RAS")
+  ]);
+
   
-  const modif1date = agent(1, [
+  const baseAgentAdd1Date = agent(1, [
     date(1, 1, 2025, "en attente"),
     date(2, 2, 2025, "en attente")
   ], [
     date(5, 2, 2025, "fait", "RAS")
   ]);
 
-  const modif2dates = agent(1, [
+  const agentAdd2Dates = agent(1, [
     date(1, 1, 2025, "en attente"),
     date(2, 2, 2025, "en attente")
   ], [
@@ -114,28 +122,45 @@ export const runAllTests = () => {
   const newAgent = agent(2);
   const newAgent2 = agent(3);
 
+
+
+
+  // Tests automatisés
   runTest("Aucun changement", true,
     validateNewSave([baseAgent], [baseAgent])
   );
 
-  runTest("Une seule date différente (ajout)", true,
-    validateNewSave([baseAgent], [modif1date])
+  runTest("Ajouter une date ", true,
+    validateNewSave([baseAgent], [baseAgentAdd1Date])
+  );
+
+  runTest("Deux dates modifié d'un coup", false,
+    validateNewSave([baseAgent], [baseAgent2DatesModif])
   );
 
   runTest("Deux dates différentes", false,
-    validateNewSave([baseAgent], [modif2dates])
+    validateNewSave([baseAgent], [agentAdd2Dates])
   );
 
   runTest("Un agent en plus", true,
     validateNewSave([baseAgent], [baseAgent, newAgent])
   );
 
-  runTest("Deux agents différents", false,
+  runTest("Un agent en moins", true,
+    validateNewSave([baseAgent, newAgent], [baseAgent])
+  );
+
+  runTest("Deux agents en plus", false,
     validateNewSave([baseAgent], [baseAgent, newAgent, newAgent2])
   );
+
+  runTest("deux agents en moins", false,
+    validateNewSave([baseAgent, newAgent, newAgent2], [baseAgent])
+  )
 
   runTest("Cas démo : oldData vide", true,
     validateNewSave([], [baseAgent])
   );
+
 };
 

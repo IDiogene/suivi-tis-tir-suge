@@ -47,7 +47,7 @@ const demoConfig = [
     new Agent({
       name: "Martin",
       surname: "Sophie",
-      weaponPermitDate: new datesP(15, 3, 2021),
+      weaponPermitDate: new datesP(15, 9, 2024),
       shootingTrainingDates: blocDateP(),
       tisTrainingDates: blocDateP(),
       id: 2
@@ -55,7 +55,7 @@ const demoConfig = [
     new Agent({
       name: "Durand",
       surname: "Pierre",
-      weaponPermitDate: new datesP(10, 1, 2019),
+      weaponPermitDate: new datesP(10, 1, 2022),
       shootingTrainingDates: blocDateP(),
       tisTrainingDates: blocDateP(),
       id: 3
@@ -63,7 +63,7 @@ const demoConfig = [
     new Agent({
       name: "Lefebvre",
       surname: "Claire",
-      weaponPermitDate: new datesP(5, 6, 2022),
+      weaponPermitDate: new datesP(5, 6, 2023),
       shootingTrainingDates: blocDateP(),
       tisTrainingDates: blocDateP(),
       id: 4

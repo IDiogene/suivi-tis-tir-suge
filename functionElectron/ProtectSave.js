@@ -1,5 +1,5 @@
 // Fonction de comparaisons des sauvegardes, pour valider une nouvelle sauvegarde.
-export const validateNewSave = (oldData, newData) => {
+const validateNewSave = (oldData, newData) => {
   let diffCountAgent = 0;
   let diffCountDates = 0;
   let isValide = false;
@@ -88,7 +88,7 @@ const runTest = (desc, expected, result) => {
 
 
 //  fonction des tests automatisées regroupés 
-export const runAllTests = () => {
+const runAllTests = () => {
 
   // configuration des agents et de leurs dates
   const baseAgent = agent(1, [

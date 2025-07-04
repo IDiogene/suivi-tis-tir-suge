@@ -91,7 +91,7 @@ export const AgentProvider = ({ children }) => {
         .then((result) => {
             setSaveStatus(result.success); // met à jour le statut de la sauvegarde
             // met à jour le statut de la sauvegarde
-            console.log("sauvegarde effectué", result.success, result.error);
+            console.log("sauvegarde effectué", result.success, result.error, result.data, result.precData);
         })
         .catch((error) => {
             setSaveStatus(false); // met à jour le statut de la sauvegarde en cas d'erreur
